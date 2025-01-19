@@ -1,0 +1,21 @@
+{
+  "id": 2,
+  "name": "kitchen2.jpg",
+  "title": "E-Street Kitchen",
+  "create_dt": "1/14/2025",
+  "city": "Kapaa",
+  "paragraphs": [
+    {
+      "paragraph": "We are very pleased with our new kitchen!!!"
+    },
+    {
+      "paragraph": "Second paragraph"
+    },
+    {
+      "paragraph": "Third paragraph modified also"
+    },
+    {
+      "paragraph": "ghjkkkk"
+    }
+  ]
+}

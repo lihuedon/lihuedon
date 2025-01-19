@@ -1,0 +1,15 @@
+{
+  "id": 5,
+  "name": "Van-sedona.jpg",
+  "title": "Vanny in Sedona, Arizona",
+  "create_dt": "1/14/2025",
+  "city": "Bellingham",
+  "paragraphs": [
+    {
+      "paragraph": "This is an example of a paragraph. Enter text here."
+    },
+    {
+      "paragraph": "This is a second paragraph."
+    }
+  ]
+}
