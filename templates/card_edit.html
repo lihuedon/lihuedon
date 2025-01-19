@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<div class="output">
+  {% include 'header.html' %}
+</div>
+
+<!--CARDS-->
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="255"
+                            width="100%" scrolling="no">Image
+                    </iframe>
+                    <div class="card-body">
+                        <h4> {{the_cards[image].title}}</h4>
+                        <p class="card-text">
+
+                            {{the_cards[image].paragraphs[0].paragraph}}
+
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button id="{{image}}" class="view-button btn btn-sm btn-outline-secondary"
+                                        type="button">View
+                                </button>
+                                <!--                  <button id="edit-button" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                            </div>
+                            <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<form>-->
+<!--  <div class="mb-3">-->
+<!--    <label for="exampleInputEmail1" class="form-label">Email address</label>-->
+<!--    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">-->
+<!--    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+<!--  </div>-->
+<!--  <div class="mb-3">-->
+<!--    <label for="exampleInputPassword1" class="form-label">Password</label>-->
+<!--    <input type="password" class="form-control" id="exampleInputPassword1">-->
+<!--  </div>-->
+<!--  <div class="mb-3 form-check">-->
+<!--    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+<!--  </div>-->
+<!--  <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--</form>-->
+
+<div class="output">
+  {% include 'footer.html' %}
+</div>
+</html>

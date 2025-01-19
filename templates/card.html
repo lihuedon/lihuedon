@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
+<div class="output">
+  {% include 'header.html' %}
+</div>
+    <!--    CARD-->
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <h2 class="fw-light" style="color:thistle"> {{the_cards[image].title}}</h2>
+            <!--<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">-->
+            <div class="row row-cols-1 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <!--            <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="100%"  width="100%" scrolling="no">Image</iframe>-->
+                        <img src="/static/images/{{image}}" alt="Van in Sedona AZ" width="100%" height="100%"
+                             style="display:flex;justify-content:center;">
+
+                        <div class="card-body">
+                            <!--             <h4>{{the_cards[image].title}}</h4>-->
+                            {% for para in the_cards[image].paragraphs %}
+                            <p class="card-text">
+                                {{para.paragraph}}
+                            </p>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button id="{{image}}" class="edit-button btn btn-sm btn-outline-secondary"
+                                            type="button">Edit
+                                    </button>
+<!--                                    <button id="edit-button" type="button" class="btn btn-sm btn-outline-secondary">-->
+<!--                                        Edit-->
+<!--                                    </button>-->
+                                </div>
+                                <small class="text-body-secondary"> {{the_cards[image].id}} mins</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+<div class="output">
+  {% include 'footer.html' %}
+</div>
+</html>

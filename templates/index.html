@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
+<div class="output">
+    {% include 'header.html' %}
+</div>
+
+<!--  H1 LIHUEDON-->
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light" style="color:thistle">LIHUEDON</h1>
+            <h4 class="lead text-body-secondary">Audeat est facere -- To Dare is to Do!</h4>
+            <p class="lead text-body-secondary">My blog will post pictures, ideas, and musings about life, the universe
+                and everything. </p>
+            <p>
+                <button id="view-button-unique" type="button" class="btn btn-sm btn-outline-secondary">View</button>
+
+                <!--          <a href="#" class="btn btn-primary my-2">Main call to action</a>-->
+                <!--          <a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
+            </p>
+        </div>
+    </div>
+</section>
+
+<!--CARDS-->
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for image in the_cards %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="255"
+                            width="100%" scrolling="no">Image
+                    </iframe>
+                    <div class="card-body">
+                        <h4> {{the_cards[image].title}}</h4>
+                        <p class="card-text">
+
+                            {{the_cards[image].paragraphs[0].paragraph}}
+
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button id="{{image}}" class="view-button btn btn-sm btn-outline-secondary"
+                                        type="button">View
+                                </button>
+                                <!--                  <button id="edit-button" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                            </div>
+                            <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="output">
+    {% include 'footer.html' %}
+</div>
+</html>
