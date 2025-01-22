@@ -12,12 +12,18 @@
             <h4 class="lead text-body-secondary">Audeat est facere -- To Dare is to Do!</h4>
             <p class="lead text-body-secondary">My blog will post pictures, ideas, and musings about life, the universe
                 and everything. </p>
+            <span id="add-button-target">Add button response.
+            {% if not "none" == new_image: %}
             <p>
-                <button id="view-button-unique" type="button" class="btn btn-sm btn-outline-secondary">View</button>
-
-                <!--          <a href="#" class="btn btn-primary my-2">Main call to action</a>-->
-                <!--          <a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
+                <img src="/static/images/{{new_image}}" alt="New Image" width="20%" height="20%"/>
+                     <div class="btn-group">
+                        <button id="{{new_image}}" class="add-button btn btn-sm btn-outline-secondary"
+                                type="button">Add Image
+                        </button>
+                    </div>
             </p>
+            {% endif %}
+            </span>
         </div>
     </div>
 </section>

@@ -10,22 +10,23 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
+
+
                     <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="255"
                             width="100%" scrolling="no">Image
                     </iframe>
+
                     <div class="card-body">
                         <h4> {{the_cards[image].title}}</h4>
                         <p class="card-text">
 
                             {{the_cards[image].paragraphs[0].paragraph}}
-
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <button id="{{image}}" class="view-button btn btn-sm btn-outline-secondary"
                                         type="button">View
                                 </button>
-                                <!--                  <button id="edit-button" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
                             </div>
                             <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
                         </div>
