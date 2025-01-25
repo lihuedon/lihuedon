@@ -39,10 +39,14 @@ def card_view(image="Van-sedona.jpg"):
 def card_update(image="Don_Simpson.jpg"):
     print("card_update POST")
     image = request.args.get('image')
-    email = request.form['email']
-    pwd = request.form['password']
-    print(email)
-    print(pwd)
+    print(image)
+    id = request.form['id']  # name='id'
+    name = request.form['name']  # name='name'
+    title = request.form['title']  # name='title'
+    print(id)
+    print(name)
+    print(title)
+
 
     return render_template('card_edit.html', the_cards=the_cards, image=image)
 # --------------------------UPDATE------------------------------- #

@@ -16,7 +16,7 @@
                             width="100%" scrolling="no">Image
                     </iframe>
                     <div class="card-body">
-                        <h4> {{the_cards[image].title}}</h4>
+                        <h4 style="color:thistle"> {{the_cards[image].title}}</h4>
                         <p class="card-text">
 
                             {{the_cards[image].paragraphs[0].paragraph}}
@@ -40,41 +40,29 @@
                 <div class="card shadow-sm">
 
                     <div class="card-body">
-                        <h4> {{the_cards[image].title}}</h4>
-                        <p class="card-text">
-
-                            {{the_cards[image].paragraphs[0].paragraph}}
-
-                        </p>
                         <div class="d-flex justify-content-between align-items-center">
 
                             <!-- FORM -->
                             <form action="/card-update?image={{image}}" method="post">
                                 <div class="mb-3 mt-3">
-                                    <label for="email" class="form-label">Email:</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Enter email"
-                                           name="email">
+                                    <label for="id" class="form-label">ID:</label>
+                                    <input type="id" class="form-control" id="id" placeholder="Enter id"
+                                           name="id" value="{{the_cards[image].id}}">
                                 </div>
                                 <div class="mb-3 mt-3">
-                                    <label for="password" class="form-label">Password:</label>
-                                    <input type="password" class="form-control" id="password" placeholder="Enter password"
-                                           name="password">
+                                    <label for="name" class="form-label">Image Name:</label>
+                                    <input type="name" class="form-control" id="name" placeholder="Enter image name"
+                                           name="name" value="{{the_cards[image].name}}">
                                 </div>
-<!--                                <div class="mb-3">-->
-<!--                                    <label for="pwd" class="form-label">Password:</label>-->
-<!--                                    <input type="password" class="form-control" id="pwd" placeholder="Enter password"-->
-<!--                                           name="pswd">-->
-<!--                                </div>-->
-                                <div class="form-check mb-3">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" name="remember"> Remember me
-                                    </label>
+                                <div class="mb-3 mt-3">
+                                    <label for="title" class="form-label">Title:</label>
+                                    <input type="title" class="form-control" id="title" placeholder="Enter title"
+                                           name="title" value="{{the_cards[image].title}}">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                             <!-- FORM -->
 
-                            <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
                         </div>
                     </div>
                 </div>
@@ -90,3 +78,21 @@
     {% include 'footer.html' %}
 </div>
 </html>
+
+
+<!--SAVE FOR AUTHENTICATION-->
+<!--                                <div class="mb-3 mt-3">-->
+<!--                                    <label for="email" class="form-label">Email:</label>-->
+<!--                                    <input type="email" class="form-control" id="email" placeholder="Enter email"-->
+<!--                                           name="email">-->
+<!--                                </div>-->
+<!--                                <div class="mb-3 mt-3">-->
+<!--                                    <label for="pwd" class="form-label">Password:</label>-->
+<!--                                    <input type="password" class="form-control" id="pwd" placeholder="Enter password"-->
+<!--                                           name="password">-->
+<!--                                </div>-->
+<!--                                <div class="form-check mb-3">-->
+<!--                                    <label class="form-check-label">-->
+<!--                                        <input class="form-check-input" type="checkbox" name="remember"> Remember me-->
+<!--                                    </label>-->
+<!--                                </div>-->
