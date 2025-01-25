@@ -1,11 +1,9 @@
 import os
-from functions import get_image_names, get_sort_ordered_list, get_cards, get_new_image, create_card
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_card
 from flask import Flask, render_template, request, send_from_directory
 
 lapp = Flask(__name__)
 
-# The image list drives the home content
-image_names = get_image_names()
 # Get inverse sorted image list
 sort_order = get_sort_ordered_list()
 # Get the cards dictionary in sorted order
@@ -27,26 +25,40 @@ def favicon():
 
 
 # Card view
-@lapp.route('/card-view/', methods=['GET', 'POST'])
+@lapp.route('/card-view/', methods=['GET'])
 def card_view(image="Van-sedona.jpg"):
-    image_request = request.args.get('image')
 
-    if image_request:
-        image = image_request
-
+    print("card_view GET")
+    image = request.args.get('image')
     return render_template('card.html', the_cards=the_cards, image=image)
+
+
+# --------------------------UPDATE------------------------------- #
+# Card update
+@lapp.route('/card-update/', methods=['GET', 'POST'])
+def card_update(image="Don_Simpson.jpg"):
+    print("card_update POST")
+    image = request.args.get('image')
+    email = request.form['email']
+    pwd = request.form['password']
+    print(email)
+    print(pwd)
+
+    return render_template('card_edit.html', the_cards=the_cards, image=image)
+# --------------------------UPDATE------------------------------- #
 
 
 # Card edit
 @lapp.route('/card-edit/', methods=['GET', 'POST'])
 def card_edit(image="Van-sedona.jpg"):
-    image_request = request.args.get('image')
+    print("card_edit GET")
+    image = request.args.get('image')
 
-    return render_template('card_edit.html', the_cards=the_cards, image=image_request)
+    return render_template('card_edit.html', the_cards=the_cards, image=image)
 
 
 # Get thumbnail image
-@lapp.route('/thumb/', methods=['GET', 'POST'])
+@lapp.route('/thumb/', methods=['GET'])
 def thumb(image="Van-sedona.jpg"):
     image_request = request.args.get('image')
 
@@ -70,12 +82,6 @@ def add_image(image="Van-sedona.jpg"):
         image = image_request
 
     return render_template('add-image.html', image=image)
-
-
-# BOOTSTRAP ALBUM EXAMPLE CODE
-@lapp.route('/album/', methods=['GET', 'POST'])
-def album():
-    return render_template('bootstrap/album/index.html')
 
 
 if __name__ == '__main__':

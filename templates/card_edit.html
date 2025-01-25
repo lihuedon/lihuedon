@@ -1,61 +1,92 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
 <div class="output">
-  {% include 'header.html' %}
+    {% include 'header.html' %}
 </div>
 
-<!--CARDS-->
+<!--CARD-->
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+            <!-- CARD start-->
             <div class="col">
                 <div class="card shadow-sm">
-
-
                     <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="255"
                             width="100%" scrolling="no">Image
                     </iframe>
-
                     <div class="card-body">
                         <h4> {{the_cards[image].title}}</h4>
                         <p class="card-text">
 
                             {{the_cards[image].paragraphs[0].paragraph}}
+
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button id="{{image}}" class="view-button btn btn-sm btn-outline-secondary"
-                                        type="button">View
-                                </button>
+                                <!--                                <button id="image" class="update-button btn btn-sm btn-outline-secondary"-->
+                                <!--                                        type="button">Update-->
+                                <!--                                </button>-->
                             </div>
                             <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- CARD end-->
+
+            <!-- CARD2 start-->
+            <div class="col">
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+                        <h4> {{the_cards[image].title}}</h4>
+                        <p class="card-text">
+
+                            {{the_cards[image].paragraphs[0].paragraph}}
+
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <!-- FORM -->
+                            <form action="/card-update?image={{image}}" method="post">
+                                <div class="mb-3 mt-3">
+                                    <label for="email" class="form-label">Email:</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                           name="email">
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <label for="password" class="form-label">Password:</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Enter password"
+                                           name="password">
+                                </div>
+<!--                                <div class="mb-3">-->
+<!--                                    <label for="pwd" class="form-label">Password:</label>-->
+<!--                                    <input type="password" class="form-control" id="pwd" placeholder="Enter password"-->
+<!--                                           name="pswd">-->
+<!--                                </div>-->
+                                <div class="form-check mb-3">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="remember"> Remember me
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                            <!-- FORM -->
+
+                            <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CARD2 end-->
+
         </div>
     </div>
 </div>
-
-
-<!--<form>-->
-<!--  <div class="mb-3">-->
-<!--    <label for="exampleInputEmail1" class="form-label">Email address</label>-->
-<!--    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">-->
-<!--    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
-<!--  </div>-->
-<!--  <div class="mb-3">-->
-<!--    <label for="exampleInputPassword1" class="form-label">Password</label>-->
-<!--    <input type="password" class="form-control" id="exampleInputPassword1">-->
-<!--  </div>-->
-<!--  <div class="mb-3 form-check">-->
-<!--    <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--    <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-<!--  </div>-->
-<!--  <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--</form>-->
+<!-- CARD -->
 
 <div class="output">
-  {% include 'footer.html' %}
+    {% include 'footer.html' %}
 </div>
 </html>

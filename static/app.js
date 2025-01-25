@@ -1,17 +1,13 @@
 
 $(document).ready(function(){ // DOCUMENT READY FUNCTION
 
-    //   Cards Display
-//   $('#cards-target').load('/cards');
-
-//    // Thumbnail Display
-//   var x = $('#image').val();
-//   $('#thumb-target').load('/thumb?image='+x);
-
-//    // Add image button click function
-//   var x = $('#image').val();
-//   $('#add-button-target').load('/add-image?image='+x);
-
+    // Edit card UPDATE button array Click Function
+    $('.update-button').each(function(index) {
+        $(this).on('click', function() {
+        var image = $(this).attr('id');
+        window.location.href=('/card-edit?image='+image);
+        });
+    });
 
     // Add button Click Function
     $('.add-button').on('click', function() {
@@ -23,7 +19,7 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     $('.view-button').each(function(index) {
         $(this).on('click', function() {
         var image = $(this).attr('id');
-        window.location.href=('/card-view?image='+image+'&new_image='+image);
+        window.location.href=('/card-view?image='+image);
         });
     });
 
@@ -35,10 +31,5 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         });
     });
 
-
-  //View Button Click Function
-  $("#view-button-unique").click(function(){
-     window.location.href=('/card-view/');
-  })
-
 }); // DOCUMENT READY FUNCTION
+

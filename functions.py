@@ -224,9 +224,8 @@ def get_new_image():
     return CREATE_CARD
 
 # # The image list drives the home content
-# image_names = get_image_names()
 # # Get inverse sorted image list
-# sort_order = get_sort_order()
+# sort_order = get_sort_ordered_list()
 # # Get the cards dictionary in sorted order
 # the_cards = get_cards(sort_order)
 
