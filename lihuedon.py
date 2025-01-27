@@ -1,5 +1,5 @@
 import os
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_card
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card_json
 from flask import Flask, render_template, request, send_from_directory
 
 lapp = Flask(__name__)
@@ -36,17 +36,27 @@ def card_view(image="Van-sedona.jpg"):
 # --------------------------UPDATE------------------------------- #
 # Card update
 @lapp.route('/card-update/', methods=['GET', 'POST'])
-def card_update(image="Don_Simpson.jpg"):
+def card_update(image=None):
     print("card_update POST")
+
     image = request.args.get('image')
-    print(image)
     id = request.form['id']  # name='id'
     name = request.form['name']  # name='name'
     title = request.form['title']  # name='title'
-    print(id)
-    print(name)
-    print(title)
+    paragraphs = request.form.getlist('paragraphs[]')  # name='paragraphs[]'
+    if image != name:
+        print(image)
+        print(name)
+        # TO DO
+        # delete_card_json(image)
+        # card = create_card(image=name, id=id, title=title)
+    else:
+        card = update_card(image=image, id=id, name=name, title=title, paragraph_text=paragraphs)
+    print(card)
 
+    global the_cards
+    sort_order = get_sort_ordered_list()
+    the_cards = get_cards(sort_order)
 
     return render_template('card_edit.html', the_cards=the_cards, image=image)
 # --------------------------UPDATE------------------------------- #

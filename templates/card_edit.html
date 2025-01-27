@@ -17,11 +17,15 @@
                     </iframe>
                     <div class="card-body">
                         <h4 style="color:thistle"> {{the_cards[image].title}}</h4>
+
+                        {% for para in the_cards[image].paragraphs %}
                         <p class="card-text">
 
-                            {{the_cards[image].paragraphs[0].paragraph}}
+                            {{para.paragraph}}
 
                         </p>
+                        {% endfor %}
+
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <!--                                <button id="image" class="update-button btn btn-sm btn-outline-secondary"-->
@@ -46,20 +50,34 @@
                             <form action="/card-update?image={{image}}" method="post">
                                 <div class="mb-3 mt-3">
                                     <label for="id" class="form-label">ID:</label>
-                                    <input type="id" class="form-control" id="id" placeholder="Enter id"
-                                           name="id" value="{{the_cards[image].id}}">
+                                    <input type="number" id="id" name="id" min="1" max="9999" value="{{the_cards[image].id}}">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                                 <div class="mb-3 mt-3">
-                                    <label for="name" class="form-label">Image Name:</label>
-                                    <input type="name" class="form-control" id="name" placeholder="Enter image name"
-                                           name="name" value="{{the_cards[image].name}}">
+                                     <select type="name" class="form-select" id="name" aria-label="Default"
+                                        name="name" value="{{the_cards[image].name}}">
+                                          <option selected>{{the_cards[image].name}}</option>
+                                          <option value="tom_hanks.jpg">tom_hanks.jpg</option>
+                                          <option value="sunset.jpg">sunset.jpg</option>
+                                          <option value="kitchen2.jpg">kitchen2.jpg</option>
+                                          <option value="Don_Simpson.jpg">Don_Simpson.jpg</option>
+                                      </select>
                                 </div>
                                 <div class="mb-3 mt-3">
                                     <label for="title" class="form-label">Title:</label>
                                     <input type="title" class="form-control" id="title" placeholder="Enter title"
                                            name="title" value="{{the_cards[image].title}}">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+
+
+                                <div class="mb-3 mt-3">
+
+                                    {% for para in the_cards[image].paragraphs %}
+                                    <textarea class="custom-textarea" type="text" name="paragraphs[]">{{para.paragraph}}</textarea>
+                                    {% endfor %}
+
+                                </div>
+
                             </form>
                             <!-- FORM -->
 

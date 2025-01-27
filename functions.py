@@ -22,25 +22,41 @@ def get_next_id_int():
 
 
 # Create new json card file
-def create_card(image="tom_hanks.jpg", title="Default Title", paragraph_text = [], city="Bellingham"):
-    json_file_path = "app_json/" + image + ".json"
-    paragraph_text = ["First paragraph", "Second paragraph", "", "", "", "", "", "", "", ""]
+def create_card(image=None, id=None, name=None, title=None, paragraphs=None, city=None):
     card = {}
-    paragraphs = []
     paragraph = {}
-    # CREATE DICTIONARY
-    i = 0
-    for p in paragraph_text:
-        paragraph['paragraph'] = p
-        paragraphs.append(paragraph)
-    i+=1
-    card['id'] = get_next_id_int()
-    card['name'] = image
-    card['title'] = title
-    card['create_dt'] = "1/18/2025"
-    card['city'] = city
-    card['paragraphs'] = paragraphs
-    with open(json_file_path, 'w') as fp:
+    file_path = ""
+
+    if paragraphs == None:
+        paragraphs = []
+        paragraph_text = ["First paragraph", "Second paragraph", "", "", "", "", "", "", "", ""]
+        # CREATE DICTIONARY
+        i = 0
+        for p in paragraph_text:
+            paragraph['paragraph'] = p
+            paragraphs.append(paragraph)
+        i+=1
+
+
+    if image != None:
+        file_path = "app_json/" + image + ".json"
+    if os.path.exists(file_path):
+        with open(file_path, 'r+', encoding='utf-8') as json_file:
+            card = json.load(json_file)
+            if id != None:
+                card['id'] = id
+            else:
+                card['id'] = get_next_id_int()
+            if name !=None:
+                card['name'] = name
+            if title != None:
+                card['title'] = title
+            if city != None:
+                card['city'] = city
+            card['create_dt'] = "1/18/2025"
+            card['paragraphs'] = paragraphs
+
+    with open(file_path, 'w') as fp:
         json.dump(card, fp)
     return card
 
@@ -138,42 +154,48 @@ def get_cards(sort_order=[]):
     # Read json file
     cards ={}
     i = 1
-    for image_name in sort_order:
-        with open("app_json/" + image_name + ".json", mode="r", encoding="utf-8") as read_file:
-            card_data = json.load(read_file)
-            cards[image_name] = card_data
+    for image in sort_order:
+        file_path = "app_json/" + image + ".json"
+        if os.path.exists(file_path):
+            with open(file_path, mode="r", encoding="utf-8") as read_file:
+                card_data = json.load(read_file)
+                cards[image] = card_data
+        else:
+            print("NOT FOUND")
+            print(file_path)
     i += 1
     return cards
 
 
-def update_card(image="kitchen2.jpg"):
-    file_path = "app_json/" + image + ".json"
+def update_card(image=None, id=None, name=None, title=None, paragraph_text=None, city=None):
+    card = {}
+    paragraphs = []
+    paragraph = {}
+    file_path = ""
+    if image != None:
+        file_path = "app_json/" + image + ".json"
     if os.path.exists(file_path):
         with open(file_path, 'r+', encoding='utf-8') as json_file:
             card = json.load(json_file)
-            card['id'] = 1
-            card['name'] = "ClarkMansionInterior.jpg"
-            card['title'] = "Grand Victorian Entry"
-            card['create_dt'] = "1/18/2025"
-            card['city'] = "London"
-
-            i = 0
-            new_text = ["Groovy Victorian Foyer", "Second paragraph", "Third paragraph modified also", "Something/Anything", "FIVE!"]
-            print(len(new_text))
-            paras = card['paragraphs']
-            print(len(paras))
-            if i < len(paras):
-                print("TO DO: FIX UPDATE_CARD FUNCTION")
-            for txt in new_text:
-                if i < len(paras):
-                    card['paragraphs'][i]['paragraph'] = txt
-                else:
-                    print("TO DO: FIGURE OUT HOW TO ADD ANOTHER PARAGRAPH")
-                    # print(txt)
-                    # card['paragraphs'][i]['paragraph'] = txt
-                    # this statement blows chunks!
-                    # IndexError: list index out of range
+            if id != None:
+                card['id'] = id
+            if name !=None:
+                card['name'] = name
+            if title != None:
+                card['title'] = title
+            if city != None:
+                card['city'] = city
+            if paragraph_text != None:
+                # CREATE DICTIONARY
+                dict_list = []
+                i = 0
+                for p in paragraph_text:
+                    paragraph['paragraph'] = p
+                    dict_copy = paragraph.copy()
+                    dict_list.append(dict_copy)
                 i += 1
+                card['paragraphs'] = dict_list
+
             # place the cursor at the beginning of the file
             json_file.seek(0)
             json.dump(card, json_file)
@@ -185,7 +207,7 @@ def update_card(image="kitchen2.jpg"):
 
 
 # Create new json card file
-def create_card(image="tom_hanks.jpg", title="Default Title", paragraph_text = [], city="Bellingham"):
+def create_card(id="0", image="tom_hanks.jpg", name=None, title="Default Title", paragraph_text = [], city="Bellingham"):
     card = {}
     paragraphs = []
     paragraph = {}
@@ -199,7 +221,7 @@ def create_card(image="tom_hanks.jpg", title="Default Title", paragraph_text = [
     i = 0
     for p in paragraph_text:
         paragraph['paragraph'] = p
-        paragraphs.append(paragraph)
+        paragraphs.insert(paragraph)
     i+=1
     card['id'] = get_next_id_int()
     card['name'] = image
@@ -209,19 +231,32 @@ def create_card(image="tom_hanks.jpg", title="Default Title", paragraph_text = [
     card['paragraphs'] = paragraphs
     with open(json_file_path, 'w') as fp:
         json.dump(card, fp)
-    # global the_cards
-    # # The image list drives the home content
-    # image_names = get_image_names()
-    # # Get inverse sorted image list
-    # sort_order = get_sort_ordered_list()
-    # # Get the cards dictionary in sorted order
-    # the_cards = get_cards(sort_order)
     return card
 
 
 def get_new_image():
     global CREATE_CARD
     return CREATE_CARD
+
+
+# The delete card's JSON file
+def delete_card_json(image=None, name=None):
+    print(image)
+    print(name)
+    # Read json file
+    file_path = "app_json/" + image + ".json"
+    try:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print("File was removed.")
+        else:
+            print("File does not exist but it's definitely gone.")
+    except Exception as e:
+        print(e)
+    finally:
+        print("delete_card_json: " + image)
+
+    return 0
 
 # # The image list drives the home content
 # # Get inverse sorted image list
