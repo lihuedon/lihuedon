@@ -9,6 +9,12 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         });
     });
 
+    // Image Selector onchange Function
+    $('#name').on('change', function() {
+        var image = $(this).val();
+        window.location.href=('/card-edit?image='+image);
+    });
+
     // Add button Click Function
     $('.add-button').on('click', function() {
         var image = $(this).attr('id');

@@ -124,7 +124,7 @@ def sort_list(unsorted_list=[]):
     my_keys.sort(reverse=True)
     # Sorted Dictionary
     sd = {i: unsorted_dict[i] for i in my_keys}
-    print(sd)
+    # print(sd)
     for i in my_keys:
         sorted_list.append(sd[i])
     return sorted_list
@@ -150,7 +150,7 @@ def sort_dict(unsorted_list=[]):
 
 # There is one card per image
 def get_cards(sort_order=[]):
-    print(sort_order)
+    # print(sort_order)
     # Read json file
     cards ={}
     i = 1
@@ -217,7 +217,7 @@ def create_card(id="0", image="tom_hanks.jpg", name=None, title="Default Title",
     paragraphs = []
     paragraph = {}
     # CREATE DICTIONARY
-    print(len(paragraph_text))
+    # print(len(paragraph_text))
     i = 0
     for p in paragraph_text:
         paragraph['paragraph'] = p

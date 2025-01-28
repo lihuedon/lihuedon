@@ -58,17 +58,18 @@ def card_update(image=None):
     sort_order = get_sort_ordered_list()
     the_cards = get_cards(sort_order)
 
-    return render_template('card_edit.html', the_cards=the_cards, image=image)
+    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order)
 # --------------------------UPDATE------------------------------- #
 
 
 # Card edit
 @lapp.route('/card-edit/', methods=['GET', 'POST'])
-def card_edit(image="Van-sedona.jpg"):
+def card_edit(image=None):
     print("card_edit GET")
+    sort_order = get_sort_ordered_list()
     image = request.args.get('image')
 
-    return render_template('card_edit.html', the_cards=the_cards, image=image)
+    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order)
 
 
 # Get thumbnail image

@@ -56,11 +56,10 @@
                                 <div class="mb-3 mt-3">
                                      <select type="name" class="form-select" id="name" aria-label="Default"
                                         name="name" value="{{the_cards[image].name}}">
-                                          <option selected>{{the_cards[image].name}}</option>
-                                          <option value="tom_hanks.jpg">tom_hanks.jpg</option>
-                                          <option value="sunset.jpg">sunset.jpg</option>
-                                          <option value="kitchen2.jpg">kitchen2.jpg</option>
-                                          <option value="Don_Simpson.jpg">Don_Simpson.jpg</option>
+                                         <option selected>{{the_cards[image].name}}</option>
+                                         {% for img in image_list %}
+                                         <option value="{{img}}">{{img}}</option>
+                                         {% endfor %}
                                       </select>
                                 </div>
                                 <div class="mb-3 mt-3">
