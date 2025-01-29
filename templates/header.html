@@ -21,16 +21,29 @@
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
                     <h4>About</h4>
-                    <p class="text-body-secondary">This website is my tinker toy. It is hosted on a Raspberry PI 4
-                        located in my office. It is powered by a Python Flask application running on a Gunicorn Web
-                        Service Gateway Interface (WSGI).</p>
+                    <p class="text-body-secondary">
+                        On the right is the avatar I created in 2007 using the free "Simpsonize Me" app that was part of
+                        Burger King's Simpsons movie promotion. Lihuedon is the user name I adopted when I retired on
+                        Kauai and needed a non-work e-mail account.
+                        I have used both on various social media sites including Facebook, Twitter, Imgur, BlueSky, etc.
+                        It personifies my affinity for the Simpsons fond but unsparing parody of humanity.
+                    </p>
+                    <p class="text-body-secondary">This website is my tinker toy. It is hosted on a $10 Raspberry PI Zero
+                        located in my home office. It is powered by a Python Flask application running on a Gunicorn Web
+                        Service Gateway Interface (WSGI) server.</p>
+                        <div id="drag1" draggable="true" ondragstart="drag(event)">
+                            <img src="/static/pizero_hand_cpc.jpg" height="40%" width="40%">
+                        </div>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                    <!--          <h4>Contact</h4>-->
+                    <h4>Contact</h4>
+                    <div id="drop1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="/static/lihuedon.jpg" height="60%" width="60%">
+                    </div>
                     <ul class="list-unstyled">
-                        <!--            <li><a href="#" class="text-black">Follow on Twitter</a></li>-->
-                        <!--            <li><a href="#" class="text-black">Like on Facebook</a></li>-->
-                        <!--            <li><a href="mailto:lihuedon@gmail.com?subject=Mail from Lihuedon Website">Email Me</a></li>-->
+                        <li><a href="https://www.facebook.com/lihuedon" class="text-black">Like on Facebook</a></li>
+                        <li><a href="https://bsky.app/profile/lihuedon.bsky.social" class="text-black">BlueSky</a></li>
+                        <li><a href="mailto:lihuedon@gmail.com?subject=Mail from Lihuedon Website">Email Me</a></li>
                     </ul>
                 </div>
             </div>
