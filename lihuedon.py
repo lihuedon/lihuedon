@@ -13,7 +13,7 @@ the_cards = get_cards(sort_order)
 # Application routing
 @lapp.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', the_cards=the_cards, new_image=get_new_image())
+    return render_template('index.html', the_cards=the_cards)
 
 
 # favicon.ico
@@ -58,7 +58,7 @@ def card_update(image=None):
     sort_order = get_sort_ordered_list()
     the_cards = get_cards(sort_order)
 
-    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order)
+    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=get_new_image())
 # --------------------------UPDATE------------------------------- #
 
 
@@ -69,7 +69,7 @@ def card_edit(image=None):
     sort_order = get_sort_ordered_list()
     image = request.args.get('image')
 
-    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order)
+    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=get_new_image())
 
 
 # Get thumbnail image

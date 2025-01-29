@@ -207,28 +207,28 @@ def update_card(image=None, id=None, name=None, title=None, paragraph_text=None,
 
 
 # Create new json card file
-def create_card(id="0", image="tom_hanks.jpg", name=None, title="Default Title", paragraph_text = [], city="Bellingham"):
+def create_card(image=None):
     card = {}
     paragraphs = []
     paragraph = {}
     json_file_path = "app_json/" + image + ".json"
-    paragraph_text = ["First paragraph", "Second paragraph", "", "", "", "", "", "", "", "Last"]
-    card = {}
-    paragraphs = []
-    paragraph = {}
+    card['id'] = get_next_id_int()
+    card['name'] = image
+    card['title'] = "Title Goes Here"
+    card['create_dt'] = "1/29/2025"
+    card['city'] = "Bellingham"
+    paragraph_text = ["First paragraph", "Second paragraph", "", "", "", "", "", "", "", ""]
     # CREATE DICTIONARY
-    # print(len(paragraph_text))
+    dict_list = []
     i = 0
     for p in paragraph_text:
         paragraph['paragraph'] = p
-        paragraphs.insert(paragraph)
-    i+=1
-    card['id'] = get_next_id_int()
-    card['name'] = image
-    card['title'] = title
-    card['create_dt'] = "1/18/2025"
-    card['city'] = city
-    card['paragraphs'] = paragraphs
+        dict_copy = paragraph.copy()
+        dict_list.append(dict_copy)
+    i += 1
+    card['paragraphs'] = dict_list
+    print(card)
+
     with open(json_file_path, 'w') as fp:
         json.dump(card, fp)
     return card
