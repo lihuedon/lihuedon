@@ -8,7 +8,7 @@ CREATE_CARD = "none"
 # Get image names from file system
 def get_image_names():
     # The images drive the home content
-    image_path = '/home/pi/PycharmProjects/lihuedon/static/images'
+    image_path = './static/images'
     image_names = os.listdir(image_path)
     return image_names
 
