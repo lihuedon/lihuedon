@@ -1,43 +1,36 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
+<html data-bs-theme="auto" lang="en" xmlns="http://www.w3.org/1999/html">
 <div class="output">
-  {% include 'header.html' %}
+    {% include 'header.html' %}
 </div>
-    <!--    CARD-->
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
-            <h2 class="fw-light" style="color:thistle"> {{the_cards[image].title}}</h2>
-            <!--<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">-->
-            <div class="row row-cols-1 g-3">
-                <div class="col">
-                    <div class="card shadow-sm">
+<!--    CARD-->
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h2 class="fw-light" style="color:thistle"> {{the_cards[image].title}}</h2>
+        <div class="row row-cols-1 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
 
-                        <div class="card-body">
-                        <!--            <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="100%"  width="100%" scrolling="no">Image</iframe>-->
-                        <img src="/static/images/{{image}}" alt="Van in Sedona AZ" width="100%" height="100%"
-                             style="display:flex;justify-content:center;">
-                            <!--             <h4>{{the_cards[image].title}}</h4>-->
-                            {% for para in the_cards[image].paragraphs %}
-                            <p class="card-text">
-                                {{para.paragraph}}
-                            </p>
-                            {% endfor %}
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-<!--                                    <button id="{{image}}" class="edit-button btn btn-sm btn-outline-secondary"-->
-<!--                                            type="button">Edit-->
-<!--                                    </button>-->
-                                </div>
-                                <small class="text-body-secondary"> {{the_cards[image].id}} mins</small>
+                    <div class="card-body">
+                        <img alt="Van in Sedona AZ" height="100%" src="/static/images/{{image}}" style="display:flex;justify-content:center;"
+                             width="100%">
+                        {% for para in the_cards[image].paragraphs %}
+                        <p class="card-text">
+                            {{para.paragraph}}
+                        </p>
+                        {% endfor %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
                             </div>
+                            <small class="text-body-secondary"> {{the_cards[image].id}} </small>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--</div>-->
         </div>
     </div>
+</div>
 <div class="output">
-  {% include 'footer.html' %}
+    {% include 'footer.html' %}
 </div>
 </html>

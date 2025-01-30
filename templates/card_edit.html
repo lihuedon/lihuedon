@@ -1,19 +1,21 @@
-    <!doctype html>
-<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
+<!doctype html>
+<html data-bs-theme="auto" lang="en" xmlns="http://www.w3.org/1999/html">
 <div class="output">
     {% include 'header.html' %}
-    <span id="add-button-target">Add button response.
-        {% if not "none" == new_image: %}
-        <p>
-            <img src="/static/images/{{new_image}}" alt="New Image" width="20%" height="20%"/>
-                 <div class="btn-group">
-                    <button id="{{new_image}}" class="add-button btn btn-sm btn-outline-secondary"
-                            type="button">Add Image
-                    </button>
-                </div>
-        </p>
-        {% endif %}
-        </span>
+</div>
+<div>
+    <span id="add-button-target">
+    {% if not "none" == new_image: %}
+    <p>
+        <img alt="New Image" height="20%" src="/static/images/{{new_image}}" width="20%"/>
+             <div class="btn-group">
+                <button class="add-button btn btn-sm btn-outline-secondary" id="{{new_image}}"
+                        type="button">Add Image
+                </button>
+            </div>
+    </p>
+    {% endif %}
+</span>
 </div>
 
 <!--CARD-->
@@ -24,8 +26,8 @@
             <!-- CARD start-->
             <div class="col">
                 <div class="card shadow-sm">
-                    <iframe class="bd-placeholder-img card-img-top" src="/thumb?image={{image}}" height="255"
-                            width="100%" scrolling="no">Image
+                    <iframe class="bd-placeholder-img card-img-top" height="255" scrolling="no"
+                            src="/thumb?image={{image}}" width="100%">Image
                     </iframe>
                     <div class="card-body">
                         <h4 style="color:thistle"> {{the_cards[image].title}}</h4>
@@ -37,14 +39,13 @@
 
                         </p>
                         {% endfor %}
-
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <!--                                <button id="image" class="update-button btn btn-sm btn-outline-secondary"-->
-                                <!--                                        type="button">Update-->
-                                <!--                                </button>-->
+                                <button id="{{image}}" class="view-button btn btn-sm btn-outline-secondary"
+                                        type="button">View
+                                </button>
                             </div>
-                            <small class="text-body-secondary">{{the_cards[image].id}} mins</small>
+                             <small class="text-body-secondary">{{the_cards[image].id}} </small>
                         </div>
                     </div>
                 </div>
@@ -54,44 +55,39 @@
             <!-- CARD2 start-->
             <div class="col">
                 <div class="card shadow-sm">
-
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-
                             <!-- FORM -->
                             <form action="/card-update?image={{image}}" method="post">
                                 <div class="mb-3 mt-3">
-                                    <label for="id" class="form-label">ID:</label>
-                                    <input type="number" id="id" name="id" min="1" max="9999" value="{{the_cards[image].id}}">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <label class="form-label" for="id">ID:</label>
+                                    <input id="id" max="9999" min="1" name="id" type="number"
+                                           value="{{the_cards[image].id}}">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
                                 </div>
                                 <div class="mb-3 mt-3">
-                                     <select type="name" class="form-select" id="name" aria-label="Default"
-                                        name="name" value="{{the_cards[image].name}}">
-                                         <option selected>{{the_cards[image].name}}</option>
-                                         {% for img in image_list %}
-                                         <option value="{{img}}">{{img}}</option>
-                                         {% endfor %}
-                                      </select>
+                                    <select aria-label="Default" class="form-select" id="name" name="name"
+                                            type="name" value="{{the_cards[image].name}}">
+                                        <option selected>{{the_cards[image].name}}</option>
+                                        {% for img in image_list %}
+                                        <option value="{{img}}">{{img}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="mb-3 mt-3">
-                                    <label for="title" class="form-label">Title:</label>
-                                    <input type="title" class="form-control" id="title" placeholder="Enter title"
-                                           name="title" value="{{the_cards[image].title}}">
+                                    <label class="form-label" for="title">Title:</label>
+                                    <input class="form-control" id="title" name="title" placeholder="Enter title"
+                                           type="title" value="{{the_cards[image].title}}">
                                 </div>
-
-
                                 <div class="mb-3 mt-3">
 
                                     {% for para in the_cards[image].paragraphs %}
-                                    <textarea class="custom-textarea" type="text" name="paragraphs[]">{{para.paragraph}}</textarea>
+                                    <textarea class="custom-textarea" name="paragraphs[]"
+                                              type="text">{{para.paragraph}}</textarea>
                                     {% endfor %}
-
                                 </div>
-
                             </form>
                             <!-- FORM -->
-
                         </div>
                     </div>
                 </div>
