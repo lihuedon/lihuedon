@@ -58,6 +58,9 @@ def create_card(image=None, id=None, name=None, title=None, paragraphs=None, cit
 
     with open(file_path, 'w') as fp:
         json.dump(card, fp)
+        global CREATE_CARD
+        CREATE_CARD = "none"
+
     return card
 
 
@@ -231,6 +234,9 @@ def create_card(image=None):
 
     with open(json_file_path, 'w') as fp:
         json.dump(card, fp)
+
+    global CREATE_CARD
+    CREATE_CARD = "none"
     return card
 
 

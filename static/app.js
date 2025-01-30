@@ -18,7 +18,8 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     // Add button Click Function
     $('.add-button').on('click', function() {
         var image = $(this).attr('id');
-        $('#add-button-target').load('/add-image?image='+image);
+//        $('#add-button-target').load('/add-image?image='+image);
+        window.location.href=('/add-image?image='+image);
     });
 
     // View card button array Click Function

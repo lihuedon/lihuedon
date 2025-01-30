@@ -89,14 +89,17 @@ def add_image(image="Van-sedona.jpg"):
     image_request = request.args.get('image')
     print("IN add_image")
     print(image_request)
-    print("IN add_image")
     dictionary = create_card(image_request)
-    print(dictionary)
+    # print(dictionary)
 
     if image_request:
         image = image_request
 
-    return render_template('add-image.html', image=image)
+    global the_cards
+    sort_order = get_sort_ordered_list()
+    the_cards = get_cards(sort_order)
+
+    return render_template('/card_edit.html', image=image, the_cards=the_cards)
 
 
 if __name__ == '__main__':
