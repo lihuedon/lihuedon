@@ -3,9 +3,9 @@
 <div class="output">
     {% include 'header.html' %}
 </div>
-<div>
-    <span id="add-button-target">
+<div class="container">
     {% if not "none" == new_image: %}
+    <span id="add-button-target">
     <p>
         <img alt="New Image" height="20%" src="/static/images/{{new_image}}" width="20%"/>
              <div class="btn-group">
@@ -14,8 +14,8 @@
                 </button>
             </div>
     </p>
+    </span>
     {% endif %}
-</span>
 </div>
 
 <!--CARD-->

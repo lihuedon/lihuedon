@@ -68,8 +68,10 @@ def card_edit(image=None):
     print("card_edit GET")
     sort_order = get_sort_ordered_list()
     image = request.args.get('image')
+    new_image = get_new_image()
+    print(new_image)
 
-    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=get_new_image())
+    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=new_image)
 
 
 # Get thumbnail image
@@ -93,12 +95,13 @@ def add_image(image=None):
 
     if image_request:
         image = image_request
+    new_image = get_new_image()
 
     global the_cards
     sort_order = get_sort_ordered_list()
     the_cards = get_cards(sort_order)
 
-    return render_template('/card_edit.html', image=image, the_cards=the_cards, image_list=sort_order)
+    return render_template('/card_edit.html', image=image, the_cards=the_cards, image_list=sort_order, new_image=new_image)
 
 
 if __name__ == '__main__':
