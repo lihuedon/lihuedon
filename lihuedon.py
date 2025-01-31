@@ -31,6 +31,8 @@ def upload_form():
 
 @lapp.route('/upload', methods=['POST'])
 def upload_file():
+    new_name = request.form['new-name']
+    print(new_name)
     if 'file' not in request.files:
         return redirect(request.url)
     file = request.files['file']
@@ -38,8 +40,10 @@ def upload_file():
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(lapp.config['UPLOAD_FOLDER'], filename))
-        return redirect(url_for('uploaded_file', filename=filename))
+        # Rename the file from the input
+        new_filename = new_name
+        file.save(os.path.join(lapp.config['UPLOAD_FOLDER'], new_filename))
+        return redirect(url_for('uploaded_file', filename=new_filename))
 
 
 @lapp.route('/uploads/<filename>')

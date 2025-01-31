@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime
 
 the_cards = {}
 CREATE_CARD = "none"
@@ -26,6 +27,11 @@ def create_card(image=None, id=None, name=None, title=None, paragraphs=None, cit
     card = {}
     paragraph = {}
     file_path = ""
+    # Get the current date and time
+    now = datetime.now()
+    # Format the date and time
+    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    print("Formatted date and time:", formatted_now)
 
     if paragraphs == None:
         paragraphs = []
@@ -53,7 +59,7 @@ def create_card(image=None, id=None, name=None, title=None, paragraphs=None, cit
                 card['title'] = title
             if city != None:
                 card['city'] = city
-            card['create_dt'] = "1/18/2025"
+            card['create_dt'] = formatted_now
             card['paragraphs'] = paragraphs
 
     with open(file_path, 'w') as fp:
@@ -215,10 +221,16 @@ def create_card(image=None):
     paragraphs = []
     paragraph = {}
     json_file_path = "app_json/" + image + ".json"
+    # Get the current date and time
+    now = datetime.now()
+    # Format the date and time
+    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    print("Formatted date and time:", formatted_now)
+
     card['id'] = get_next_id_int()
     card['name'] = image
     card['title'] = "Title Goes Here"
-    card['create_dt'] = "1/29/2025"
+    card['create_dt'] = formatted_now
     card['city'] = "Bellingham"
     paragraph_text = ["First paragraph", "Second paragraph", "", "", "", "", "", "", "", ""]
     # CREATE DICTIONARY
