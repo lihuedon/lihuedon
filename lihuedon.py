@@ -1,6 +1,7 @@
 import os
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card_json
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, redirect, url_for
+from werkzeug.utils import secure_filename
 
 lapp = Flask(__name__)
 
@@ -8,6 +9,42 @@ lapp = Flask(__name__)
 sort_order = get_sort_ordered_list()
 # Get the cards dictionary in sorted order
 the_cards = get_cards(sort_order)
+
+
+# Define the path to save uploaded files
+UPLOAD_FOLDER = 'static/images/'
+lapp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Define allowed file extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@lapp.route('/upload_form', methods=['GET'])
+def upload_form():
+    return render_template('upload.html')
+
+
+@lapp.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(lapp.config['UPLOAD_FOLDER'], filename))
+        return redirect(url_for('uploaded_file', filename=filename))
+
+
+@lapp.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return f'File successfully uploaded: {filename}'
 
 
 # Application routing
@@ -26,7 +63,7 @@ def favicon():
 
 # Card view
 @lapp.route('/card-view/', methods=['GET'])
-def card_view(image="Van-sedona.jpg"):
+def card_view(image=None):
 
     print("card_view GET")
     image = request.args.get('image')
