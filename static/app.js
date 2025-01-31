@@ -22,6 +22,13 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         window.location.href=('/add-image?image='+image);
     });
 
+    // Delete card button Click Function
+    $('.delete-button').on('click', function() {
+        var image = $(this).val();
+//        $('#add-button-target').load('/add-image?image='+image);
+        window.location.href=('/delete-card?image='+image);
+    });
+
     // View card button array Click Function
     $('.view-button').each(function(index) {
         $(this).on('click', function() {

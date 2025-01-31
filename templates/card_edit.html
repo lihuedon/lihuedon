@@ -6,14 +6,12 @@
 <div class="container">
     {% if not "none" == new_image: %}
     <span id="add-button-target">
-    <p>
         <img alt="New Image" height="20%" src="/static/images/{{new_image}}" width="20%"/>
              <div class="btn-group">
                 <button class="add-button btn btn-sm btn-outline-secondary" id="{{new_image}}"
                         type="button">Add Image
                 </button>
             </div>
-    </p>
     </span>
     {% endif %}
 </div>
@@ -44,11 +42,11 @@
                         {% endfor %}
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button id="{{image}}" class="view-button btn btn-sm btn-outline-secondary"
+                                <button class="view-button btn btn-sm btn-outline-secondary" id="{{image}}"
                                         type="button">View
                                 </button>
                             </div>
-                             <small class="text-body-secondary">{{the_cards[image].id}} </small>
+                            <small class="text-body-secondary">{{the_cards[image].id}} </small>
                         </div>
                     </div>
                 </div>
@@ -91,9 +89,18 @@
                                 </div>
                             </form>
                             <!-- FORM -->
+
                         </div>
                     </div>
                 </div>
+                            <form action="/delete-card/">
+                            <img alt="Image" height="20%" src="/static/images/{{image}}" width="20%"/>
+                            <div class="btn-group">
+                                <button class="delete-button btn btn-sm btn-outline-secondary" value="{{image}}"
+                                        type="button">Delete Card
+                                </button>
+                            </div>
+                            </form>
             </div>
             <!-- CARD2 end-->
 

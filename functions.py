@@ -272,9 +272,39 @@ def delete_card_json(image=None, name=None):
     except Exception as e:
         print(e)
     finally:
-        print("delete_card_json: " + image)
+        print("delete_card_json: " + file_path)
 
     return 0
+
+
+# The delete card's image file
+def delete_card_image(image=None):
+    print(image)
+    # Read image file
+    file_path = "./static/images/" + image
+    try:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print("File was removed.")
+        else:
+            print("File does not exist but it's definitely gone.")
+    except Exception as e:
+        print(e)
+    finally:
+        print("delete_card_image: " + file_path)
+
+    return 0
+
+
+# delete card image and json files
+def delete_card(image=None):
+    delete_card_json(image=image)
+    delete_card_image(image=image)
+    return "CARD DELETED: " + image
+
+
+# message = delete_card()
+# print(message)
 
 # # The image list drives the home content
 # # Get inverse sorted image list

@@ -1,5 +1,5 @@
 import os
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card_json
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card_json, delete_card_image, delete_card
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 
@@ -143,6 +143,23 @@ def add_image(image=None):
     the_cards = get_cards(sort_order)
 
     return render_template('/card_edit.html', image=image, the_cards=the_cards, image_list=sort_order, new_image=new_image)
+
+
+# delete card
+@lapp.route('/delete-card/', methods=['GET', 'POST'])
+def delete_this_card(image=None):
+    image_request = request.args.get('image')
+    print("IN delete_card")
+    print(image_request)
+    new_image = get_new_image()
+    message = delete_card(image_request)
+    print(message)
+
+    global the_cards
+    sort_order = get_sort_ordered_list()
+    the_cards = get_cards(sort_order)
+
+    return render_template('card_edit.html', image='Don_Simpson.jpg', the_cards=the_cards, image_list=sort_order, new_image=new_image)
 
 
 if __name__ == '__main__':
