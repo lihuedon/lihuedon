@@ -1,5 +1,5 @@
 import os
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card_json, delete_card_image, delete_card
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 

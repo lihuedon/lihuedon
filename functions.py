@@ -296,7 +296,7 @@ def delete_card_image(image=None):
     return 0
 
 
-# delete card image and json files
+# delete card image and json file
 def delete_card(image=None):
     delete_card_json(image=image)
     delete_card_image(image=image)
