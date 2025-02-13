@@ -1,5 +1,5 @@
 import os
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_card, update_card, delete_card
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 
@@ -132,7 +132,7 @@ def add_image(image=None):
     image_request = request.args.get('image')
     print("IN add_image")
     print(image_request)
-    dictionary = create_card(image_request)
+    dictionary = create_new_card(image_request)
 
     if image_request:
         image = image_request
