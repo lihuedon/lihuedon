@@ -22,54 +22,6 @@ def get_next_id_int():
     return i + 1
 
 
-# Create new json card file
-def create_card(image=None, id=None, name=None, title=None, paragraphs=None, city=None):
-    card = {}
-    paragraph = {}
-    file_path = ""
-    # Get the current date and time
-    now = datetime.now()
-    # Format the date and time
-    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
-    print("Formatted date and time:", formatted_now)
-
-    if paragraphs == None:
-        paragraphs = []
-        paragraph_text = ["First paragraph", "Second paragraph", "", "", "", "", "", "", "", ""]
-        # CREATE DICTIONARY
-        i = 0
-        for p in paragraph_text:
-            paragraph['paragraph'] = p
-            paragraphs.append(paragraph)
-        i+=1
-
-
-    if image != None:
-        file_path = "app_json/" + image + ".json"
-    if os.path.exists(file_path):
-        with open(file_path, 'r+', encoding='utf-8') as json_file:
-            card = json.load(json_file)
-            if id != None:
-                card['id'] = id
-            else:
-                card['id'] = get_next_id_int()
-            if name !=None:
-                card['name'] = name
-            if title != None:
-                card['title'] = title
-            if city != None:
-                card['city'] = city
-            card['create_dt'] = formatted_now
-            card['paragraphs'] = paragraphs
-
-    with open(file_path, 'w') as fp:
-        json.dump(card, fp)
-        global CREATE_CARD
-        CREATE_CARD = "none"
-
-    return card
-
-
 # Determine image sort order by id reversed
 def get_sort_ordered_list():
     image_names = get_image_names()
@@ -216,7 +168,7 @@ def update_card(image=None, id=None, name=None, title=None, paragraph_text=None,
 
 
 # Create new json card file
-def create_card(image=None):
+def create_new_card(image=None):
     card = {}
     paragraphs = []
     paragraph = {}
@@ -312,7 +264,7 @@ def delete_card(image=None):
 # # Get the cards dictionary in sorted order
 # the_cards = get_cards(sort_order)
 
-# new_card = create_card(image="tom_hanks.jpg", title="Tom Hanks in Castaway", city="Kappaa")
+# new_card = create_card(image="Don_Simpson.jpg")
 # print(new_card)
 #
 # print(get_next_id_int())
