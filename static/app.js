@@ -48,14 +48,15 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     // Loan Calculator header text
     $('#loan-header-target').load('/loan-header/');
 
-//    // Loan Calculator button array Click Function
-//    $('.loan-button').each(function(index) {
-//        $(this).on('click', function() {
-//            let PV = $('#PV').val()
-//            let rate = $('#rate').val()
-//            let number = $('#number').val()
-//            $('#loan-button-target').load('/calculate/?PV='+PV+'&rate='+rate+'&number='+number);
-//        });
-//    });
+    // Loan Calculator plot button array Click Function
+    $('.loan-plot-button').each(function(index) {
+        $(this).on('click', function() {
+            let payment = $('#payment').val()
+            let PV = $('#PV').val()
+            let rate = $('#rate').val()
+            let number = $('#number').val()
+            $('#loan-button-target').load('/plot-loan/?payment='+payment+'&PV='+PV+'&rate='+rate+'&number='+number);
+        });
+    });
 
 }); // DOCUMENT READY FUNCTION

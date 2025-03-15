@@ -103,6 +103,26 @@ def get_loan_header():
 
     return ln.print_header()
 
+# Plot Loan
+@lapp.route('/plot-loan/', methods=['GET'])
+def plot_loan():
+    print("plot_loan GET")
+    PV = request.args.get('PV')
+    print(PV)
+    rate = request.args.get('rate')
+    print(rate)
+    number = request.args.get('number')
+    print(number)
+    payment = "ANSWER GOES HERE"
+    # display = ""
+    if PV:
+        payment = ln.calculate_payment(int(PV), float(rate), int(number))
+        # display = ln.present_payment(payment, int(PV), float(rate), int(number))
+    print(payment)
+    return ln.plot_loan(float(payment), int(PV), float(rate), int(number))
+    # return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display)
+
+
 # --------------------------UPDATE------------------------------- #
 # Card update
 @lapp.route('/card-update/', methods=['GET', 'POST'])

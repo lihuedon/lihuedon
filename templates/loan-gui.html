@@ -35,12 +35,21 @@
                                            placeholder="Enter number of months"
                                            name="number" value="{{number}}" required>
                                 </div>
+                                <div class="mb-3">
+<!--                                    <label for="payment">Payment:</label>-->
+                                    <input type="hidden" class="form-control" id="payment"
+                                           placeholder="Payment"
+                                           name="payment" value="{{payment}}">
+                                </div>
                                 <button class="btn btn-primary" type="submit">Submit</button>
                             </form>
                             <pre id="loan-button-target">
 <!--                                 loan calculation goes here: {{PV}} - {{rate}} - {{number}} - {{payment}}-->
                                 {{display}}
                             </pre>
+                            {%if display:%}
+                                <button class="loan-plot-button btn btn-primary" type="button">Plot</button>
+                            {%endif%}
                         </div>
                     </div>
                 </div>
