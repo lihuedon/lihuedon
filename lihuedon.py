@@ -1,7 +1,5 @@
 import os
 
-from repolib.util import keys_map
-
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
