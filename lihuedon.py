@@ -1,7 +1,14 @@
 import os
+
+from repolib.util import keys_map
+
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card
 from flask import Flask, render_template, request, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
+from loan import Loan
+
+ln = Loan()
+
 
 lapp = Flask(__name__)
 
@@ -23,6 +30,32 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def calculate_payment():
+    """Validate input, calculate payment, and return formatted results."""
+    # print(ln.print_header())
+    # while True:
+        # if not input_present_value.value.replace(".", "").isdigit():
+        #     error("Input error", "You must type a valid loan amount.")
+        #     break
+        # elif not input_rate.value.replace(".", "").isdigit():
+        #     error("Input error", "You must type a valid interest rate.")
+        #     break
+        # elif not input_period.value.isdigit():
+        #     error("Input error", "You must type a valid number of months.")
+        #     break
+        # else:
+        #     PV = float(input_present_value.value)
+        #     r = float(input_rate.value)
+        #     n = int(input_period.value)
+        #     P = ln.calculate_payment(PV, r, n)
+        #     display.value = "%s" % ln.prepare_plot_title(P, PV, r, n)
+        #     plot_button.update_command(_plot, args=[P, PV, r, n])
+        #     plot_button.show()
+        #     plot_button.focus()
+        #     break
+    return ln.print_header()
+
+# print(calculate_payment())
 
 @lapp.route('/upload_form', methods=['GET'])
 def upload_form():
@@ -73,6 +106,32 @@ def card_view(image=None):
     image = request.args.get('image')
     return render_template('card.html', the_cards=the_cards, image=image)
 
+
+# Loan Calculator
+@lapp.route('/loan-calculator/', methods=['GET'])
+def loan_gui():
+    print("loan_gui GET")
+    PV = request.args.get('PV')
+    print(PV)
+    rate = request.args.get('rate')
+    print(rate)
+    number = request.args.get('number')
+    print(number)
+    payment = "ANSWER GOES HERE"
+    display = "FORMATTED DISPLAY"
+    if PV:
+        payment = ln.calculate_payment(int(PV), float(rate), int(number))
+        display = ln.present_payment(payment, int(PV), float(rate), int(number))
+    print(payment)
+
+    return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display)
+
+
+# Get Loan Header
+@lapp.route('/loan-header/', methods=['GET'])
+def get_loan_header():
+
+    return ln.print_header()
 
 # --------------------------UPDATE------------------------------- #
 # Card update
@@ -142,7 +201,7 @@ def add_image(image=None):
     sort_order = get_sort_ordered_list()
     the_cards = get_cards(sort_order)
 
-    return render_template('/card_edit.html', image=image, the_cards=the_cards, image_list=sort_order, new_image=new_image)
+    return render_template('card_edit.html', image=image, the_cards=the_cards, image_list=sort_order, new_image=new_image)
 
 
 # delete card

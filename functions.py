@@ -264,7 +264,7 @@ def delete_card(image=None):
 # # Get the cards dictionary in sorted order
 # the_cards = get_cards(sort_order)
 
-# new_card = create_card(image="Don_Simpson.jpg")
+# new_card = create_new_card(image="Don_Simpson.jpg")
 # print(new_card)
 #
 # print(get_next_id_int())
