@@ -103,6 +103,7 @@ def get_loan_header():
 
     return ln.print_header()
 
+
 # Plot Loan
 @lapp.route('/plot-loan/', methods=['GET'])
 def plot_loan():
@@ -123,6 +124,7 @@ def plot_loan():
     # return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display)
 
 
+#
 # --------------------------UPDATE------------------------------- #
 # Card update
 @lapp.route('/card-update/', methods=['GET', 'POST'])
