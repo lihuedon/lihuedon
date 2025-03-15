@@ -7,7 +7,6 @@ from loan import Loan
 
 ln = Loan()
 
-
 lapp = Flask(__name__)
 
 # Get inverse sorted image list
@@ -27,33 +26,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def calculate_payment():
-    """Validate input, calculate payment, and return formatted results."""
-    # print(ln.print_header())
-    # while True:
-        # if not input_present_value.value.replace(".", "").isdigit():
-        #     error("Input error", "You must type a valid loan amount.")
-        #     break
-        # elif not input_rate.value.replace(".", "").isdigit():
-        #     error("Input error", "You must type a valid interest rate.")
-        #     break
-        # elif not input_period.value.isdigit():
-        #     error("Input error", "You must type a valid number of months.")
-        #     break
-        # else:
-        #     PV = float(input_present_value.value)
-        #     r = float(input_rate.value)
-        #     n = int(input_period.value)
-        #     P = ln.calculate_payment(PV, r, n)
-        #     display.value = "%s" % ln.prepare_plot_title(P, PV, r, n)
-        #     plot_button.update_command(_plot, args=[P, PV, r, n])
-        #     plot_button.show()
-        #     plot_button.focus()
-        #     break
-    return ln.print_header()
-
-# print(calculate_payment())
 
 @lapp.route('/upload_form', methods=['GET'])
 def upload_form():
@@ -116,7 +88,7 @@ def loan_gui():
     number = request.args.get('number')
     print(number)
     payment = "ANSWER GOES HERE"
-    display = "FORMATTED DISPLAY"
+    display = ""
     if PV:
         payment = ln.calculate_payment(int(PV), float(rate), int(number))
         display = ln.present_payment(payment, int(PV), float(rate), int(number))

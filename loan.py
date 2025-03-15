@@ -17,10 +17,10 @@ class Loan:
         header += "\n        r(PV)"
         header += "\nP = ________________"
         header += "\n      1-(1+r)^-n\n"
-        header += "\nP = Payment"
+        header += "\nP  = Payment"
         header += "\nPV = Present Value"
-        header += "\nr = rate per period"
-        header += "\nn = number of periods\n"
+        header += "\nr  = rate per period"
+        header += "\nn  = number of periods\n"
         return header
 
     def calculate_payment(self, PV, r, n):

@@ -10,10 +10,7 @@
         <div class="row row-cols-1 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-
                     <div class="card-body">
-
-
                         <div class="container mt-3">
                             <h4>
                                 <pre id="loan-header-target">
@@ -24,17 +21,19 @@
                                 <div class="mb-3">
                                     <label for="PV">Present Value:</label>
                                     <input type="number" class="form-control" id="PV" placeholder="Enter present value"
-                                           name="PV" size="20" value="{{PV}}" required>
+                                           name="PV" value="{{PV}}" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="rate">Interest Rate:</label>
-                                    <input type="number" step="0.001" class="form-control" id="rate" placeholder="Enter interest rate"
-                                           name="rate" size="20" value="{{rate}}" required>
+                                    <input type="number" step="0.001" class="form-control" id="rate"
+                                           placeholder="Enter interest rate"
+                                           name="rate" value="{{rate}}" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="number">Number of Months:</label>
-                                    <input type="number" class="form-control" id="number" placeholder="Enter number of months"
-                                           name="number" size="20" value="{{number}}" required>
+                                    <input type="number" class="form-control" id="number"
+                                           placeholder="Enter number of months"
+                                           name="number" value="{{number}}" required>
                                 </div>
                                 <button class="btn btn-primary" type="submit">Submit</button>
                             </form>
@@ -42,10 +41,7 @@
 <!--                                 loan calculation goes here: {{PV}} - {{rate}} - {{number}} - {{payment}}-->
                                 {{display}}
                             </pre>
-
                         </div>
-
-
                     </div>
                 </div>
             </div>

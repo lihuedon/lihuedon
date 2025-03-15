@@ -59,4 +59,3 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
 //    });
 
 }); // DOCUMENT READY FUNCTION
-
