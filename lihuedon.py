@@ -1,9 +1,15 @@
 import os
+import io
 
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card
-from flask import Flask, render_template, request, send_from_directory, redirect, url_for
+from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 from loan import Loan
+# import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+# import numpy as np
+
 
 ln = Loan()
 
@@ -105,23 +111,61 @@ def get_loan_header():
 
 
 # Plot Loan
-@lapp.route('/plot-loan/', methods=['GET'])
+#     def plot_loan(self, P, PV, r, n):
+@lapp.route('/plot_loan', methods=['GET'])
 def plot_loan():
-    print("plot_loan GET")
-    PV = request.args.get('PV')
-    print(PV)
-    rate = request.args.get('rate')
-    print(rate)
-    number = request.args.get('number')
-    print(number)
-    payment = "ANSWER GOES HERE"
-    # display = ""
-    if PV:
-        payment = ln.calculate_payment(int(PV), float(rate), int(number))
-        # display = ln.present_payment(payment, int(PV), float(rate), int(number))
-    print(payment)
-    return ln.plot_loan(float(payment), int(PV), float(rate), int(number))
-    # return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display)
+    """Take loan data and graph amortization, payment, interest, and principle."""
+    P = float(request.args.get('P'))
+    PV = float(request.args.get('PV'))
+    r = float(request.args.get('r'))
+    n = int(request.args.get('n'))
+
+    principle = PV
+    rate = r * .01
+    num_payments = n
+    monthly_payment = P
+
+    x_payment_numbers = []
+    y_monthly_payments = []
+    y_interest_values = []
+    y_principle_values = []
+
+    for payment_no in range(1, num_payments + 1):
+        x_payment_numbers.append(payment_no)
+        y_monthly_payments.append(monthly_payment)
+        int_pmt = principle * rate / 12
+        y_interest_values.append(int_pmt)
+        princ_pmt = monthly_payment - int_pmt
+        y_principle_values.append(princ_pmt)
+        principle -= princ_pmt
+
+    # plt.style.use('fivethirtyeight')
+    fig = Figure(figsize=(12, 8.5))
+    canvas = FigureCanvas(fig)
+    ax = fig.add_subplot(111)  # Add a subplot at position 1x1x1 (grid of 1 row, 1 col)
+
+    # fig, ax = plt.subplots(figsize=(15, 9))
+    ax.plot(x_payment_numbers, y_principle_values, linewidth=3, color='yellow')
+    ax.plot(x_payment_numbers, y_interest_values, linewidth=3, color='cyan')
+    ax.plot(x_payment_numbers, y_monthly_payments, linewidth=1, color='magenta')
+
+    # Set chart title and label axes
+    ax.set_title(f"{ln.prepare_plot_title(P, PV, r, n)}", fontsize=14)
+    ax.set_xlabel("Number of Payments", fontsize=14)
+    ax.set_ylabel("Principle and Interest", fontsize=14)
+
+    # Set size of tick labels.
+    ax.tick_params(axis='both', labelsize=14)
+
+    # plt.show()
+
+    # Save it to a BytesIO buffer
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+
+
+    return Response(buf.getvalue(), mimetype='image/png')
 
 
 #

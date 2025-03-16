@@ -36,7 +36,6 @@
                                            name="number" value="{{number}}" required>
                                 </div>
                                 <div class="mb-3">
-<!--                                    <label for="payment">Payment:</label>-->
                                     <input type="hidden" class="form-control" id="payment"
                                            placeholder="Payment"
                                            name="payment" value="{{payment}}">
@@ -47,9 +46,12 @@
 <!--                                 loan calculation goes here: {{PV}} - {{rate}} - {{number}} - {{payment}}-->
                                 {{display}}
                             </pre>
+
                             {%if display:%}
                                 <button class="loan-plot-button btn btn-primary" type="button">Plot</button>
+<!--                                <img src="{{ url_for('plot_loan', P = payment, PV = PV, r = rate, n = number) }}" alt="Plot">-->
                             {%endif%}
+
                         </div>
                     </div>
                 </div>

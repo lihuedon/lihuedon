@@ -55,7 +55,8 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
             let PV = $('#PV').val()
             let rate = $('#rate').val()
             let number = $('#number').val()
-            $('#loan-button-target').load('/plot-loan/?payment='+payment+'&PV='+PV+'&rate='+rate+'&number='+number);
+             window.location.href=('/plot_loan?P='+payment+'&PV='+PV+'&r='+rate+'&n='+number);
+//            $('#loan-button-target').load('/plot_loan?P='+payment+'&PV='+PV+'&r='+rate+'&n='+number);
         });
     });
 
