@@ -5,10 +5,8 @@ from functions import get_sort_ordered_list, get_cards, get_new_image, create_ne
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 from loan import Loan
-# import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-# import numpy as np
 
 
 ln = Loan()
@@ -32,6 +30,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @lapp.route('/upload_form', methods=['GET'])
 def upload_form():
@@ -111,10 +110,10 @@ def get_loan_header():
 
 
 # Plot Loan
-#     def plot_loan(self, P, PV, r, n):
 @lapp.route('/plot_loan', methods=['GET'])
 def plot_loan():
     """Take loan data and graph amortization, payment, interest, and principle."""
+    #  def plot_loan(self, P, PV, r, n):
     P = float(request.args.get('P'))
     PV = float(request.args.get('PV'))
     r = float(request.args.get('r'))
@@ -139,12 +138,10 @@ def plot_loan():
         y_principle_values.append(princ_pmt)
         principle -= princ_pmt
 
-    # plt.style.use('fivethirtyeight')
-    fig = Figure(figsize=(12, 8.5))
+    fig = Figure(figsize=(11, 8.5))
     canvas = FigureCanvas(fig)
     ax = fig.add_subplot(111)  # Add a subplot at position 1x1x1 (grid of 1 row, 1 col)
 
-    # fig, ax = plt.subplots(figsize=(15, 9))
     ax.plot(x_payment_numbers, y_principle_values, linewidth=3, color='yellow')
     ax.plot(x_payment_numbers, y_interest_values, linewidth=3, color='cyan')
     ax.plot(x_payment_numbers, y_monthly_payments, linewidth=1, color='magenta')
@@ -157,13 +154,10 @@ def plot_loan():
     # Set size of tick labels.
     ax.tick_params(axis='both', labelsize=14)
 
-    # plt.show()
-
     # Save it to a BytesIO buffer
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
     buf.seek(0)
-
 
     return Response(buf.getvalue(), mimetype='image/png')
 
