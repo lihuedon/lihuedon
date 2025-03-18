@@ -1,0 +1,24 @@
+<!doctype html>
+<html data-bs-theme="auto" lang="en" xmlns="http://www.w3.org/1999/html">
+<div class="output">
+    {% include 'header.html' %}
+</div>
+<!--    CARD-->
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h2 class="fw-light" style="color:thistle">Streaming</h2>
+        <div class="row row-cols-1 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <iframe src="/stream" id="logo" style="overflow: hidden; width: 100%; height: 200px;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="output">
+    {% include 'footer.html' %}
+</div>
+</html>

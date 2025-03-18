@@ -1,5 +1,6 @@
 import os
 import io
+import time
 
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
@@ -7,17 +8,23 @@ from werkzeug.utils import secure_filename
 from loan import Loan
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-
+import logging
 
 ln = Loan()
 
 lapp = Flask(__name__)
 
+# Configure logging
+logging.basicConfig(
+    filename='app.log',  # Log file name
+    level=logging.INFO,  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+)
+
 # Get inverse sorted image list
 sort_order = get_sort_ordered_list()
 # Get the cards dictionary in sorted order
 the_cards = get_cards(sort_order)
-
 
 # Define the path to save uploaded files
 UPLOAD_FOLDER = 'static/images/'
@@ -30,6 +37,33 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def stream_log():
+    log_file_path = "/home/pi/PycharmProjects/lihuedon/app.log"
+    with open(log_file_path) as log_file:
+        # Move to the end of the file
+        log_file.seek(0, 2)
+        while True:
+            line = log_file.readline()
+            if line:
+                yield f"{line}"
+            time.sleep(.5)  # Small delay for stream pacing
+
+
+# Application routing
+@lapp.route('/', methods=['GET', 'POST'])
+def index():
+    lapp.logger.info('Home page was accessed.')  # Log an INFO message
+    return render_template('index.html', the_cards=the_cards)
+
+
+# favicon.ico
+@lapp.route('/favicon.ico')
+def favicon():
+    print(lapp.root_path)
+    return send_from_directory(os.path.join(lapp.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @lapp.route('/upload_form', methods=['GET'])
@@ -59,18 +93,20 @@ def uploaded_file(filename):
     return f'File successfully uploaded: {filename}'
 
 
-# Application routing
-@lapp.route('/', methods=['GET', 'POST'])
-def index():
-    return render_template('index.html', the_cards=the_cards)
+@lapp.route('/error')
+def error():
+    lapp.logger.error('Error occurred in /error route.')  # Log an ERROR message
+    return "This route throws an error!", 500
 
 
-# favicon.ico
-@lapp.route('/favicon.ico')
-def favicon():
-    print(lapp.root_path)
-    return send_from_directory(os.path.join(lapp.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@lapp.route('/dashboard')
+def dashboard():
+    return render_template("dashboard.html")
+
+
+@lapp.route('/stream')
+def stream():
+    return Response(stream_log(), content_type='text/event-stream')
 
 
 # Card view
@@ -85,19 +121,19 @@ def card_view(image=None):
 # Loan Calculator
 @lapp.route('/loan-calculator/', methods=['GET'])
 def loan_gui():
-    print("loan_gui GET")
+    # print("loan_gui GET")
     PV = request.args.get('PV')
-    print(PV)
+    # print(PV)
     rate = request.args.get('rate')
-    print(rate)
+    # print(rate)
     number = request.args.get('number')
-    print(number)
+    # print(number)
     payment = "ANSWER GOES HERE"
     display = ""
     if PV:
         payment = ln.calculate_payment(int(PV), float(rate), int(number))
         display = ln.present_payment(payment, int(PV), float(rate), int(number))
-    print(payment)
+    # print(payment)
 
     return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display)
 
@@ -162,8 +198,6 @@ def plot_loan():
     return Response(buf.getvalue(), mimetype='image/png')
 
 
-#
-# --------------------------UPDATE------------------------------- #
 # Card update
 @lapp.route('/card-update/', methods=['GET', 'POST'])
 def card_update(image=None):
@@ -189,7 +223,6 @@ def card_update(image=None):
     the_cards = get_cards(sort_order)
 
     return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=get_new_image())
-# --------------------------UPDATE------------------------------- #
 
 
 # Card edit
