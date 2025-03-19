@@ -16,7 +16,7 @@ lapp = Flask(__name__)
 
 # Configure logging
 logging.basicConfig(
-    filename='app.log',  # Log file name
+    filename='/home/pi/gunicorn/gunicorn_access.log',  # Log file name
     level=logging.INFO,  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
     format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
 )
@@ -40,7 +40,7 @@ def allowed_file(filename):
 
 
 def stream_log():
-    log_file_path = "/home/pi/PycharmProjects/lihuedon/app.log"
+    log_file_path = "/home/pi/gunicorn/gunicorn_access.log"
     with open(log_file_path) as log_file:
         # Move to the end of the file
         log_file.seek(0, 2)
