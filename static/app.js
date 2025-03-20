@@ -1,6 +1,12 @@
 
 $(document).ready(function(){ // DOCUMENT READY FUNCTION
 
+    // Clock button Click Function
+    $('.clock-button').on('click', function() {
+        var image = $(this).attr('id');
+        $('#clock-button-target').load('/thumb?image='+image);
+    });
+
     // Edit card UPDATE button array Click Function
     $('.update-button').each(function(index) {
         $(this).on('click', function() {
