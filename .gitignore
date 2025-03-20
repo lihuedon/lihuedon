@@ -1,4 +1,4 @@
-app_json/
+app_json/*
 images/
-*.json
+
 app.log

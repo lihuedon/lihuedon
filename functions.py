@@ -85,7 +85,6 @@ def sort_list(unsorted_list=[]):
     my_keys.sort(reverse=True)
     # Sorted Dictionary
     sd = {i: unsorted_dict[i] for i in my_keys}
-    # print(sd)
     for i in my_keys:
         sorted_list.append(sd[i])
     return sorted_list
@@ -103,7 +102,6 @@ def sort_dict(unsorted_list=[]):
     my_keys.sort(reverse=True)
     # Sorted Dictionary
     sorted_dictionary = {i: unsorted_dict[i] for i in my_keys}
-    print(sorted_dictionary)
     for i in my_keys:
         sorted_list.append(sorted_dictionary[i])
     return sorted_dictionary
@@ -111,7 +109,6 @@ def sort_dict(unsorted_list=[]):
 
 # There is one card per image
 def get_cards(sort_order=[]):
-    # print(sort_order)
     # Read json file
     cards ={}
     i = 1
@@ -125,27 +122,24 @@ def get_cards(sort_order=[]):
             print("NOT FOUND")
             print(file_path)
     i += 1
-    print(cards)
     return cards
 
 
 # There is one card per image
 def get_dash_cards(sort_order=[]):
-    # print(sort_order)
     # Read json file
     cards ={}
     i = 1
-    for image in sort_order:
-        file_path = "dash_json/" + image + ".json"
+    for name in sort_order:
+        file_path = "dash_json/" + name + ".json"
         if os.path.exists(file_path):
             with open(file_path, mode="r", encoding="utf-8") as read_file:
                 card_data = json.load(read_file)
-                cards[image] = card_data
+                cards[name] = card_data
         else:
             print("NOT FOUND")
             print(file_path)
     i += 1
-    print(cards)
     return cards
 
 
@@ -281,8 +275,8 @@ def delete_card(image=None):
 
 # # The image list drives the home content
 # # Get inverse sorted image list
-sort_order = get_sort_ordered_list()
-print(sort_order)
+# sort_order = get_sort_ordered_list()
+# print(sort_order)
 # # Get the cards dictionary in sorted order
 # the_cards = get_cards(sort_order)
 
