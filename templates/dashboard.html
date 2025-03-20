@@ -1,23 +1,41 @@
 <!doctype html>
-<html data-bs-theme="auto" lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en" data-bs-theme="auto" xmlns="http://www.w3.org/1999/html">
 <div class="output">
     {% include 'header.html' %}
 </div>
-<!--    CARD-->
+
+<!--  H1 LIHUEDON-->
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light" style="color:thistle">Dashboard</h1>
+            <h4 class="lead text-body-secondary">Pictures, ideas, and musings about life, the universe
+                and everything.</h4>
+        </div>
+    </div>
+</section>
+
+<!--CARDS-->
 <div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <h2 class="fw-light" style="color:thistle">Streaming</h2>
-        <div class="row row-cols-1 g-3">
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for name in dash_cards %}
+            <!-- CARD start-->
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <iframe src="/stream" id="logo" style="overflow: hidden; width: 100%; height: 200px;"></iframe>
+                    <iframe class="bd-placeholder-img card-img-top" src="/dash-view?name={{name}}" height="800"
+                            width="100%" scrolling="no">Dash Widget
+                    </iframe>
                     </div>
                 </div>
             </div>
+            <!-- CARD end-->
+            {% endfor %}
         </div>
     </div>
 </div>
+
 <div class="output">
     {% include 'footer.html' %}
 </div>

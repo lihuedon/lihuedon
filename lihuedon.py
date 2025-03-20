@@ -2,7 +2,8 @@ import os
 import io
 import time
 
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, \
+    get_dash_cards
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 from loan import Loan
@@ -25,6 +26,12 @@ logging.basicConfig(
 sort_order = get_sort_ordered_list()
 # Get the cards dictionary in sorted order
 the_cards = get_cards(sort_order)
+
+# dash_sort_order = ['accent_wall.jpg', 'tom_hanks.jpg', 'kitchen2.jpg', 'violin.gif', 'Van-sedona.jpg', 'trump.jpg', 'ClarkMansionInterior.jpg', 'sunset.jpg', 'Don_Simpson.jpg']
+dash_sort_order = ['dash-1', 'dash-2', 'dash-3']
+
+dash_cards = get_dash_cards(dash_sort_order)
+# print(dash_cards)
 
 # Define the path to save uploaded files
 UPLOAD_FOLDER = 'static/images/'
@@ -56,6 +63,28 @@ def stream_log():
 def index():
     lapp.logger.info('Home page was accessed.')  # Log an INFO message
     return render_template('index.html', the_cards=the_cards)
+
+
+@lapp.route('/dashboard', methods=['GET'])
+def dashboard():
+
+    return render_template("dashboard.html", dash_cards=dash_cards)
+
+
+# Dash view
+@lapp.route('/dash-view/', methods=['GET'])
+def dash_view(image=None):
+
+    print("dash_view GET")
+    name = request.args.get('name')
+    print(f"name:  {name}")
+    print(f"GLOBAL:  {dash_cards}")
+
+    template_name = name + ".html"
+    image = dash_cards[name].get("image")
+    print(image)
+
+    return render_template(template_name, dash_cards=dash_cards, image=image, name=name)
 
 
 # favicon.ico
@@ -97,11 +126,6 @@ def uploaded_file(filename):
 def error():
     lapp.logger.error('Error occurred in /error route.')  # Log an ERROR message
     return "This route throws an error!", 500
-
-
-@lapp.route('/dashboard')
-def dashboard():
-    return render_template("dashboard.html")
 
 
 @lapp.route('/stream')

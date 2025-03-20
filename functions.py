@@ -125,6 +125,27 @@ def get_cards(sort_order=[]):
             print("NOT FOUND")
             print(file_path)
     i += 1
+    print(cards)
+    return cards
+
+
+# There is one card per image
+def get_dash_cards(sort_order=[]):
+    # print(sort_order)
+    # Read json file
+    cards ={}
+    i = 1
+    for image in sort_order:
+        file_path = "dash_json/" + image + ".json"
+        if os.path.exists(file_path):
+            with open(file_path, mode="r", encoding="utf-8") as read_file:
+                card_data = json.load(read_file)
+                cards[image] = card_data
+        else:
+            print("NOT FOUND")
+            print(file_path)
+    i += 1
+    print(cards)
     return cards
 
 
@@ -260,7 +281,8 @@ def delete_card(image=None):
 
 # # The image list drives the home content
 # # Get inverse sorted image list
-# sort_order = get_sort_ordered_list()
+sort_order = get_sort_ordered_list()
+print(sort_order)
 # # Get the cards dictionary in sorted order
 # the_cards = get_cards(sort_order)
 
