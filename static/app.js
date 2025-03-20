@@ -54,6 +54,11 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     // Loan Calculator header text
     $('#loan-header-target').load('/loan-header/');
 
+    // Loan Calculator header text
+//    $('#calculator-app-target').load('/loan-calculator/');
+    $('#calculator-app-target').load('/card-view?image=Don_Simpson.jpg');
+
+
     // Loan Calculator plot button array Click Function
     $('.loan-plot-button').each(function(index) {
         $(this).on('click', function() {

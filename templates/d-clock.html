@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,21 +16,20 @@
 <!--    CARD-->
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-        <h2 class="fw-light" style="color:thistle"> {{dash_cards[name].title}}</h2>
+        <h2 class="fw-light" style="color:thistle"> {{dash_cards[name].city}}</h2>
         <div class="row row-cols-1 g-3">
             <div class="col">
                 <div class="card shadow-sm">
 
                     <div class="card-body">
-                        <div class="text-body-secondary"> {{dash_cards[name].city}}</div>
+<!--                        <div class="text-body-secondary"> {{dash_cards[name].city}}</div>-->
                         <!--                        <img alt="Van in Sedona AZ" height="100%" src="/static/images/{{image}}" style="display:flex;justify-content:center;"-->
                         <!--                             width="100%">-->
                         <div id="datetime-target" style="font-weight-bold">
-                            <canvas id="canvas" width="320" height="320" style="justify: right;" class="text-center">
+                            <canvas id="canvas" width="320" height="320" class="text-center">
                             </canvas>
                         </div>
-                        <div id="clock-button-target"> button target
-
+                        <div id="clock-button-target">
                         </div>
                         <p></p>
 
@@ -99,12 +99,13 @@
     }
 
     function drawTime(ctx, radius) {
+
         var now = new Date();
         var hour = now.getHours();
         var minute = now.getMinutes();
         var second = now.getSeconds();
         //hour
-        hour = hour % 12;
+        hour = (hour % 12);
         hour = (hour * Math.PI / 6) +
                 (minute * Math.PI / (6 * 60)) +
                 (second * Math.PI / (360 * 60));
