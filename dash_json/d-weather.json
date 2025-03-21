@@ -1,10 +1,10 @@
 {
-  "id": "2",
-  "name": "dash-2",
-  "image": "tom_hanks.jpg",
-  "title": "Tom Hanks in Castaway",
+  "id": "3",
+  "name": "d-weather",
+  "image": "pizero_hand_cpc.jpg",
+  "title": "Weather",
   "create_dt": "2025-03-08 15:30:39",
-  "city": "London",
+  "city": "Bellingham",
   "paragraphs": [
     {
       "paragraph": "Great movie!"

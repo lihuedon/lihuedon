@@ -7,6 +7,12 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         $('#clock-button-target').load('/thumb?image='+image);
     });
 
+    // Weather button Click Function
+    $('.weather-button').on('click', function() {
+//        var image = $(this).attr('id');
+        $('#weather-button-target').load('/thumb?image=Don_Simpson.jpg');
+    });
+
     // Edit card UPDATE button array Click Function
     $('.update-button').each(function(index) {
         $(this).on('click', function() {
@@ -54,9 +60,9 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     // Loan Calculator header text
     $('#loan-header-target').load('/loan-header/');
 
-    // Loan Calculator header text
+    // Weather data
 //    $('#calculator-app-target').load('/loan-calculator/');
-    $('#calculator-app-target').load('/card-view?image=Don_Simpson.jpg');
+    $('#weather-app-target').load('/thumb?image=tom_hanks.jpg');
 
 
     // Loan Calculator plot button array Click Function

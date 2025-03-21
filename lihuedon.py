@@ -27,7 +27,7 @@ sort_order = get_sort_ordered_list()
 the_cards = get_cards(sort_order)
 
 # Get dashboard card sorted names list
-dash_sort_order = ['d-clock', 'dash-2']
+dash_sort_order = ['d-weather', 'd-clock', 'd-clock-london']
 # Get the cards dictionary in sorted order
 dash_cards = get_dash_cards(dash_sort_order)
 
