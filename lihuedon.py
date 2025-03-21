@@ -11,10 +11,11 @@ from loan import Loan
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import logging
+from geonames import get_zip_data
 # from uszipcode import SearchEngine
 # import uszipcode as uszip
 # import sqlalchemy_mate
-# http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=8775&country=CH&radius=10&username=lihuedon
+# http://api.geonames.org/findNearbyPostalCodesJSON?country=US&radius=1&username=lihuedon&postalcode=98225
 
 # sr = uszip.SearchEngine()
 
@@ -156,49 +157,36 @@ def favicon():
 
 @lapp.route('/weather/', methods=['GET'])
 def weather(zip="98225"):
-
     tempbaseline = session.cookies['baseline']
-
     zip_request = request.args.get('zip')
     zip_cookie = session.cookies['zip']
-
     if zip_request:
         zip = zip_request
         session.cookies['zip'] = zip_request
-
     elif zip_cookie:
         zip = zip_cookie
-
-    # sr = SearchEngine()
-    # city_info = sr.by_zipcode(zip)
-    # city = city_info.city
-    # state = city_info.state
-
     city = "Bellingham"
     state = "Washington"
-
+    city_info = get_zip_data(zip)
+    print(city_info)
+    if city_info:
+        city = city_info['postalCodes'][0]['placeName']
+        state = city_info['postalCodes'][0]['adminName1']
+    print(city)
     final_url = lapp.base_url + zip + ",us"
-
     json_data = requests.get(final_url).json()
-
     the_weather = json_data['weather']
-
     the_main = json_data['main']
     print(the_main)
-
     zip_request = the_main['temp']
     feels_like = the_main['feels_like']
     temp_min = the_main['temp_min']
     temp_max = the_main['temp_max']
     pressure = the_main['pressure']
     humidity = the_main['humidity']
-
     pressure_inHg = round(pressure/lapp.inHg_conversion_factor, 2)
-
     reset = request.args.get('reset')
-
     set_baseline(pressure_inHg, reset)
-
     return render_template('weather.html', baseline=lapp.baseline, city=city, state=state, zip=zip, temp=zip_request, the_weather=the_weather, feels_like=feels_like, temp_min=temp_min, temp_max=temp_max, pressure=pressure, pressure_inHg=pressure_inHg, humidity=humidity)
 
 
