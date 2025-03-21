@@ -11,9 +11,18 @@ from loan import Loan
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import logging
-# importing required module
-# import urllib.parse
 # from uszipcode import SearchEngine
+# import uszipcode as uszip
+# import sqlalchemy_mate
+# http://api.geonames.org/findNearbyPostalCodesJSON?postalcode=8775&country=CH&radius=10&username=lihuedon
+
+# sr = uszip.SearchEngine()
+
+# z = sr.by_zipcode("10001")
+# print(z)
+#
+# z = sr.by_zipcode(10001)
+# print(z)
 
 session = requests.Session()
 
@@ -29,8 +38,7 @@ ln = Loan()
 lapp = Flask(__name__)
 # lapp.config['SECRET_KEY'] = get_json_key_value('key')
 lapp.inHg_conversion_factor = 33.8639
-lapp.base_url =  get_json_key_value('base_url')     #  "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=4d6cf1cc3d32a15541e47e0ef64225a2&zip="
-
+lapp.base_url =  get_json_key_value('base_url')
 lapp.baseline = None
 
 # Configure logging
@@ -113,6 +121,11 @@ def stream_log():
             time.sleep(.5)  # Small delay for stream pacing
 
 
+# def validate_zip(zip_code):
+#     search = SearchEngine()
+#     return search.by_zipcode(zip_code)
+
+
 # Application routing
 @lapp.route('/', methods=['GET', 'POST'])
 def index():
@@ -149,17 +162,18 @@ def weather(zip="98225"):
     zip_request = request.args.get('zip')
     zip_cookie = session.cookies['zip']
 
-    # if validate_zip(zip_request):
-    #     zip = zip_request
-    #     session.cookies['zip'] = zip_request
-    #
-    # elif validate_zip(zip_cookie):
-    #     zip = zip_cookie
-    #
-    # search = SearchEngine()
-    # city_info = search.by_zipcode(zip)
+    if zip_request:
+        zip = zip_request
+        session.cookies['zip'] = zip_request
+
+    elif zip_cookie:
+        zip = zip_cookie
+
+    # sr = SearchEngine()
+    # city_info = sr.by_zipcode(zip)
     # city = city_info.city
     # state = city_info.state
+
     city = "Bellingham"
     state = "Washington"
 

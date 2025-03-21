@@ -8,10 +8,19 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     });
 
     // Weather button Click Function
-    $('.weather-button').on('click', function() {
-//        var image = $(this).attr('id');
-        $('#weather-button-target').load('/thumb?image=Don_Simpson.jpg');
+    $('.set-zip-button').on('click', function() {
+//        var zip = $(this).val('id');
+        let zip = $('#zip').val()
+
+        $('#weather-target').load('/weather?zip='+zip);
     });
+
+    //Barometer Reset Button Click Function
+    $(".reset-barometer-button").click(function(){
+    //      var x = document.getElementById("zip").value;
+        let zip = $('#zip').val();
+        $("#weather-target").load('/weather?reset=True&zip='+zip);
+    })
 
     // Edit card UPDATE button array Click Function
     $('.update-button').each(function(index) {
@@ -62,7 +71,7 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
 
     // Weather data
 //    $('#calculator-app-target').load('/loan-calculator/');
-    $('#weather-app-target').load('/weather');
+    $('#weather-target').load('/weather');
 
 
     // Loan Calculator plot button array Click Function
