@@ -1,6 +1,8 @@
 import os
 import io
 import time
+import requests
+from datetime import datetime
 
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
@@ -9,10 +11,27 @@ from loan import Loan
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import logging
+# importing required module
+import urllib.parse
+# from uszipcode import SearchEngine
+
+session = requests.Session()
+
+print(session.cookies.get_dict())
+
+session.cookies['zip'] = "98225"
+session.cookies['baseline'] = 28.45
+
+fig = Figure()
 
 ln = Loan()
 
 lapp = Flask(__name__)
+lapp.config['SECRET_KEY'] = 'Hy87ioP'
+lapp.inHg_conversion_factor = 33.8639
+lapp.base_url = "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=4d6cf1cc3d32a15541e47e0ef64225a2&zip="
+
+lapp.baseline = None
 
 # Configure logging
 logging.basicConfig(
@@ -37,6 +56,44 @@ lapp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Define allowed file extensions
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def get_date_time(time=None):
+    x = datetime.now()
+    dt_string = x.strftime("%A") + " " + x.strftime("%B") + " " + x.strftime("%d") + ", " + x.strftime("%Y")
+    if time:
+        dt_string = dt_string + " " + x.strftime("%X")
+    return dt_string
+
+
+class BarometerBaseline:
+    def __init__(self, pressure, timestamp):
+        self._pressure = pressure
+        self._timestamp = timestamp
+
+    def get_pressure(self):
+        return self._pressure
+
+    def set_pressure(self, value):
+        self._pressure = value
+
+    def get_timestamp(self):
+        return self._timestamp
+
+    def set_timestamp(self, value):
+        self._timestamp = value
+
+
+def set_baseline(pressure_inHg, reset):
+
+    if not lapp.baseline:
+        lapp.baseline = BarometerBaseline(pressure_inHg, get_date_time(True))
+        session.cookies['baseline'] = pressure_inHg
+
+    elif reset:
+        lapp.baseline.set_pressure(pressure_inHg)
+        lapp.baseline.set_timestamp(get_date_time(True))
+        session.cookies['baseline'] = pressure_inHg
 
 
 def allowed_file(filename):
@@ -82,6 +139,53 @@ def dash_view(image=None):
 def favicon():
     return send_from_directory(os.path.join(lapp.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+@lapp.route('/weather/', methods=['GET'])
+def weather(zip="98225"):
+
+    tempbaseline = session.cookies['baseline']
+
+    zip_request = request.args.get('zip')
+    zip_cookie = session.cookies['zip']
+
+    # if validate_zip(zip_request):
+    #     zip = zip_request
+    #     session.cookies['zip'] = zip_request
+    #
+    # elif validate_zip(zip_cookie):
+    #     zip = zip_cookie
+    #
+    # search = SearchEngine()
+    # city_info = search.by_zipcode(zip)
+    # city = city_info.city
+    # state = city_info.state
+    city = "Bellingham"
+    state = "Washington"
+
+    final_url = lapp.base_url + zip + ",us"
+
+    json_data = requests.get(final_url).json()
+
+    the_weather = json_data['weather']
+
+    the_main = json_data['main']
+    print(the_main)
+
+    zip_request = the_main['temp']
+    feels_like = the_main['feels_like']
+    temp_min = the_main['temp_min']
+    temp_max = the_main['temp_max']
+    pressure = the_main['pressure']
+    humidity = the_main['humidity']
+
+    pressure_inHg = round(pressure/lapp.inHg_conversion_factor, 2)
+
+    reset = request.args.get('reset')
+
+    set_baseline(pressure_inHg, reset)
+
+    return render_template('weather.html', baseline=lapp.baseline, city=city, state=state, zip=zip, temp=zip_request, the_weather=the_weather, feels_like=feels_like, temp_min=temp_min, temp_max=temp_max, pressure=pressure, pressure_inHg=pressure_inHg, humidity=humidity)
 
 
 @lapp.route('/upload_form', methods=['GET'])

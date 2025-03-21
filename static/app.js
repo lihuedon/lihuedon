@@ -62,7 +62,7 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
 
     // Weather data
 //    $('#calculator-app-target').load('/loan-calculator/');
-    $('#weather-app-target').load('/thumb?image=tom_hanks.jpg');
+    $('#weather-app-target').load('/weather');
 
 
     // Loan Calculator plot button array Click Function
