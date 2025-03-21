@@ -270,6 +270,15 @@ def delete_card(image=None):
     return "CARD DELETED: " + image
 
 
+# Load JSON data from a file
+def get_json_key_value(key=""):
+    with open('./static/lapp.json') as file:
+        json_data = json.load(file)
+    value = json_data[key]
+    return value
+
+# print(f"The value for '{key}' is: {value}")
+
 # message = delete_card()
 # print(message)
 

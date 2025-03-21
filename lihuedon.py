@@ -4,7 +4,7 @@ import time
 import requests
 from datetime import datetime
 
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
 from werkzeug.utils import secure_filename
 from loan import Loan
@@ -12,7 +12,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import logging
 # importing required module
-import urllib.parse
+# import urllib.parse
 # from uszipcode import SearchEngine
 
 session = requests.Session()
@@ -27,9 +27,9 @@ fig = Figure()
 ln = Loan()
 
 lapp = Flask(__name__)
-lapp.config['SECRET_KEY'] = 'Hy87ioP'
+# lapp.config['SECRET_KEY'] = get_json_key_value('key')
 lapp.inHg_conversion_factor = 33.8639
-lapp.base_url = "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=4d6cf1cc3d32a15541e47e0ef64225a2&zip="
+lapp.base_url =  get_json_key_value('base_url')     #  "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=4d6cf1cc3d32a15541e47e0ef64225a2&zip="
 
 lapp.baseline = None
 
