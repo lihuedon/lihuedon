@@ -165,8 +165,8 @@ def weather(zip="98225"):
         session.cookies['zip'] = zip_request
     elif zip_cookie:
         zip = zip_cookie
-    city = "Bellingham"
-    state = "Washington"
+    city = "Bellingham"  #default
+    state = "Washington"  #default
     city_info = get_zip_data(zip)
     print(city_info)
     if city_info:

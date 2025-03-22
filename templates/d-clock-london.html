@@ -14,7 +14,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/static/app.js"></script>
 <!--    CARD-->
-<div class="album py-5 bg-body-tertiary">
     <div class="container">
         <h2 class="fw-light" style="color:thistle"> {{dash_cards[name].city}}</h2>
         <div class="row row-cols-1 g-3">
@@ -22,9 +21,6 @@
                 <div class="card shadow-sm">
 
                     <div class="card-body">
-<!--                        <div class="text-body-secondary"> {{dash_cards[name].city}}</div>-->
-                        <!--                        <img alt="Van in Sedona AZ" height="100%" src="/static/images/{{image}}" style="display:flex;justify-content:center;"-->
-                        <!--                             width="100%">-->
                         <div id="datetime-target" style="font-weight-bold">
                             <canvas id="canvas" width="320" height="320" class="text-center">
                             </canvas>
@@ -46,7 +42,6 @@
             </div>
         </div>
     </div>
-</div>
 <script>
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
@@ -131,4 +126,3 @@
 
 </script>
 </body>
-</html>

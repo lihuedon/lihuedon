@@ -1,28 +1,31 @@
 
 $(document).ready(function(){ // DOCUMENT READY FUNCTION
 
-    // Clock button Click Function
+    // Loan Calculator header text
+    $('#loan-header-target').load('/loan-header/');
+
+    // Weather data
+    $('#weather-target').load('/weather');
+
+    // Clock button
     $('.clock-button').on('click', function() {
         var image = $(this).attr('id');
         $('#clock-button-target').load('/thumb?image='+image);
     });
 
-    // Weather button Click Function
+    // Set Zipcode button
     $('.set-zip-button').on('click', function() {
-//        var zip = $(this).val('id');
         let zip = $('#zip').val()
-
         $('#weather-target').load('/weather?zip='+zip);
     });
 
-    //Barometer Reset Button Click Function
+    //Barometer Reset Button
     $(".reset-barometer-button").click(function(){
-    //      var x = document.getElementById("zip").value;
         let zip = $('#zip').val();
         $("#weather-target").load('/weather?reset=True&zip='+zip);
     })
 
-    // Edit card UPDATE button array Click Function
+    // Edit card UPDATE button array
     $('.update-button').each(function(index) {
         $(this).on('click', function() {
         var image = $(this).attr('id');
@@ -30,27 +33,25 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         });
     });
 
-    // Image Selector onchange Function
+    // Image Selector
     $('#name').on('change', function() {
         var image = $(this).val();
         window.location.href=('/card-edit?image='+image);
     });
 
-    // Add button Click Function
+    // Add button
     $('.add-button').on('click', function() {
         var image = $(this).attr('id');
-//        $('#add-button-target').load('/add-image?image='+image);
         window.location.href=('/add-image?image='+image);
     });
 
-    // Delete card button Click Function
+    // Delete card button
     $('.delete-button').on('click', function() {
         var image = $(this).val();
-//        $('#add-button-target').load('/add-image?image='+image);
         window.location.href=('/delete-card?image='+image);
     });
 
-    // View card button array Click Function
+    // View card button array
     $('.view-button').each(function(index) {
         $(this).on('click', function() {
         var image = $(this).attr('id');
@@ -58,7 +59,7 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         });
     });
 
-    // Edit card button array Click Function
+    // Edit card button array
     $('.edit-button').each(function(index) {
         $(this).on('click', function() {
         var image = $(this).attr('id');
@@ -66,15 +67,7 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         });
     });
 
-    // Loan Calculator header text
-    $('#loan-header-target').load('/loan-header/');
-
-    // Weather data
-//    $('#calculator-app-target').load('/loan-calculator/');
-    $('#weather-target').load('/weather');
-
-
-    // Loan Calculator plot button array Click Function
+    // Loan Calculator plot button
     $('.loan-plot-button').each(function(index) {
         $(this).on('click', function() {
             let payment = $('#payment').val()
@@ -82,7 +75,6 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
             let rate = $('#rate').val()
             let number = $('#number').val()
              window.location.href=('/plot_loan?P='+payment+'&PV='+PV+'&r='+rate+'&n='+number);
-//            $('#loan-button-target').load('/plot_loan?P='+payment+'&PV='+PV+'&r='+rate+'&n='+number);
         });
     });
 
