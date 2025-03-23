@@ -7,6 +7,9 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     // Weather data
     $('#weather-target').load('/weather');
 
+    // Widget data
+    $('#widget-target').load('/thumb?image=tom_hanks.jpg');
+
     // Clock button
     $('.clock-button').on('click', function() {
         var image = $(this).attr('id');

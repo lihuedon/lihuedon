@@ -12,18 +12,6 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import logging
 from geonames import get_zip_data
-# from uszipcode import SearchEngine
-# import uszipcode as uszip
-# import sqlalchemy_mate
-# http://api.geonames.org/findNearbyPostalCodesJSON?country=US&radius=1&username=lihuedon&postalcode=98225
-
-# sr = uszip.SearchEngine()
-
-# z = sr.by_zipcode("10001")
-# print(z)
-#
-# z = sr.by_zipcode(10001)
-# print(z)
 
 session = requests.Session()
 
@@ -55,7 +43,7 @@ sort_order = get_sort_ordered_list()
 the_cards = get_cards(sort_order)
 
 # Get dashboard card sorted names list
-dash_sort_order = ['d-weather', 'd-clock', 'd-clock-london']
+dash_sort_order = ['d-weather', 'd-clock', 'd-clock-london', 'd-widget']
 # Get the cards dictionary in sorted order
 dash_cards = get_dash_cards(dash_sort_order)
 
