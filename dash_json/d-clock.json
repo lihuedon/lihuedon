@@ -2,7 +2,7 @@
   "id": "1",
   "name": "d-clock",
   "image": "accent_wall.jpg",
-  "title": "Current Time",
+  "title": "Local Time",
   "create_dt": "2025-03-18 15:56:32",
   "city": "Bellingham",
   "paragraphs": [

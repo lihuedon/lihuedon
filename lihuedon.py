@@ -12,13 +12,15 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import logging
 from geonames import get_zip_data
+from weather import BarometerBaseline
+
 
 session = requests.Session()
 
-print(session.cookies.get_dict())
-
 session.cookies['zip'] = "98225"
 session.cookies['baseline'] = 28.45
+
+print(session.cookies.get_dict())
 
 fig = Figure()
 
@@ -63,36 +65,6 @@ def get_date_time(time=None):
     return dt_string
 
 
-class BarometerBaseline:
-    def __init__(self, pressure, timestamp):
-        self._pressure = pressure
-        self._timestamp = timestamp
-
-    def get_pressure(self):
-        return self._pressure
-
-    def set_pressure(self, value):
-        self._pressure = value
-
-    def get_timestamp(self):
-        return self._timestamp
-
-    def set_timestamp(self, value):
-        self._timestamp = value
-
-
-def set_baseline(pressure_inHg, reset):
-
-    if not lapp.baseline:
-        lapp.baseline = BarometerBaseline(pressure_inHg, get_date_time(True))
-        session.cookies['baseline'] = pressure_inHg
-
-    elif reset:
-        lapp.baseline.set_pressure(pressure_inHg)
-        lapp.baseline.set_timestamp(get_date_time(True))
-        session.cookies['baseline'] = pressure_inHg
-
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -110,9 +82,16 @@ def stream_log():
             time.sleep(.5)  # Small delay for stream pacing
 
 
-# def validate_zip(zip_code):
-#     search = SearchEngine()
-#     return search.by_zipcode(zip_code)
+def set_baseline(pressure_inHg, reset):
+
+    if not lapp.baseline:
+        lapp.baseline = BarometerBaseline(pressure_inHg, get_date_time(True))
+        session.cookies['baseline'] = pressure_inHg
+
+    elif reset:
+        lapp.baseline.set_pressure(pressure_inHg)
+        lapp.baseline.set_timestamp(get_date_time(True))
+        session.cookies['baseline'] = pressure_inHg
 
 
 # Application routing
