@@ -131,7 +131,7 @@ def stream_log():
 @lapp.route('/', methods=['GET', 'POST'])
 def index():
     lapp.logger.info('Home page was accessed.')  # Log an INFO message
-    return render_template('index.html', the_cards=the_cards)
+    return render_template('index.html', the_cards=the_cards, dash_cards=dash_cards)
 
 
 @lapp.route('/dashboard', methods=['GET'])
@@ -232,7 +232,7 @@ def stream():
 @lapp.route('/card-view/', methods=['GET'])
 def card_view(image=None):
     image = request.args.get('image')
-    return render_template('card.html', the_cards=the_cards, image=image)
+    return render_template('card.html', the_cards=the_cards, image=image, dash_cards=dash_cards)
 
 
 # Loan Calculator
@@ -246,7 +246,7 @@ def loan_gui():
     if PV:
         payment = ln.calculate_payment(int(PV), float(rate), int(number))
         display = ln.present_payment(payment, int(PV), float(rate), int(number))
-    return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display)
+    return render_template('loan-gui.html', PV=PV, rate=rate, number=number, payment=payment, display=display, dash_cards=dash_cards)
 
 
 # Get Loan Header
@@ -329,7 +329,7 @@ def card_edit(image=None):
     sort_order = get_sort_ordered_list()
     image = request.args.get('image')
     new_image = get_new_image()
-    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=new_image)
+    return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=new_image, dash_cards=dash_cards)
 
 
 # Get thumbnail image

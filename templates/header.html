@@ -59,6 +59,11 @@
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/">Home</a></li>
                     <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                        <ul class="dropdown">
+                            {% for name in dash_cards: %}
+                            <li><a class="dropdown-item" href="/dash-view?name={{name}}">{{dash_cards[name].get("title")}}</a></li>
+                            {%endfor%}
+                        </ul>
 <!--                    <li><a class="dropdown-item" href="/card-edit/?image=Don_Simpson.jpg">Edit</a></li>-->
                     <li><a class="dropdown-item" href="/loan-calculator/">Loan Calculator</a></li>
                 </ul>
