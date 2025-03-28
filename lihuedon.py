@@ -168,7 +168,8 @@ def login():
         if user_data and check_password_hash(user_data["password_hash"], password):  # Verify the password
             user = User(username, user_data["password_hash"])
             login_user(user)
-            return render_template('card_edit.html', image='Don_Simpson.jpg', the_cards=the_cards, image_list=sort_order, new_image=get_new_image(), dash_cards=dash_cards)
+            new_image = get_new_image()
+            return render_template('card_edit.html', image='Don_Simpson.jpg', the_cards=the_cards, image_list=sort_order, new_image=new_image, dash_cards=dash_cards)
         # return render_template('login.html')
         return "Invalid username or password!"
     return render_template('login.html')
