@@ -3,31 +3,32 @@ import io
 import time
 import requests
 from datetime import datetime
-
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value
+import json
+import logging
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
-from loan import Loan
+from werkzeug.security import generate_password_hash, check_password_hash
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-import logging
+
+# Application packages
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value
+from loan import Loan
 from geonames import get_zip_data
 from weather import BarometerBaseline
 
-
 session = requests.Session()
-
 session.cookies['zip'] = "98225"
 session.cookies['baseline'] = 28.45
-
 print(session.cookies.get_dict())
 
 fig = Figure()
-
 ln = Loan()
 
 lapp = Flask(__name__)
 # lapp.config['SECRET_KEY'] = get_json_key_value('key')
+lapp.secret_key = get_json_key_value('key')
 lapp.inHg_conversion_factor = 33.8639
 lapp.base_url =  get_json_key_value('base_url')
 lapp.baseline = None
@@ -38,6 +39,42 @@ logging.basicConfig(
     level=logging.INFO,  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
     format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
 )
+
+login_manager = LoginManager()
+login_manager.init_app(lapp)
+
+# JSON file to store user data
+USER_DATA_FILE = "users.json"
+
+# Helper function to load users from JSON
+def load_users():
+    try:
+        with open(USER_DATA_FILE, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {}  # Return an empty dictionary if the file doesn't exist
+
+# Helper function to save users to JSON
+def save_users(users):
+    with open(USER_DATA_FILE, "w") as file:
+        json.dump(users, file, indent=4)
+
+# Load users from the file when the application starts
+users = load_users()
+
+# User model
+class User(UserMixin):
+    def __init__(self, id, password_hash):
+        self.id = id
+        self.password_hash = password_hash
+
+# User loader
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id in users:
+        user_data = users[user_id]
+        return User(user_id, user_data["password_hash"])
+    return None
 
 # Get inverse sorted image list
 sort_order = get_sort_ordered_list()
@@ -101,6 +138,49 @@ def index():
     return render_template('index.html', the_cards=the_cards, dash_cards=dash_cards)
 
 
+# favicon.ico
+@lapp.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(lapp.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+@lapp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username in users:
+            return "Username already exists!"
+        password_hash = generate_password_hash(password)  # Hash the password
+        users[username] = {"password_hash": password_hash}  # Store user in JSON-compatible format
+        save_users(users)  # Save the updated users to the file
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+
+@lapp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user_data = users.get(username)
+        if user_data and check_password_hash(user_data["password_hash"], password):  # Verify the password
+            user = User(username, user_data["password_hash"])
+            login_user(user)
+            return render_template('card_edit.html', image='Don_Simpson.jpg', the_cards=the_cards, image_list=sort_order, new_image=get_new_image(), dash_cards=dash_cards)
+        # return render_template('login.html')
+        return "Invalid username or password!"
+    return render_template('login.html')
+
+
+@lapp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
 @lapp.route('/dashboard', methods=['GET'])
 def dashboard():
     return render_template("dashboard.html", dash_cards=dash_cards)
@@ -113,13 +193,6 @@ def dash_view(image=None):
     template_name = name + ".html"
     image = dash_cards[name].get("image")
     return render_template(template_name, dash_cards=dash_cards, image=image, name=name)
-
-
-# favicon.ico
-@lapp.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(lapp.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @lapp.route('/weather/', methods=['GET'])
@@ -292,6 +365,7 @@ def card_update(image=None):
 
 # Card edit
 @lapp.route('/card-edit/', methods=['GET', 'POST'])
+@login_required
 def card_edit(image=None):
     sort_order = get_sort_ordered_list()
     image = request.args.get('image')

@@ -1,0 +1,8 @@
+{
+    "lihuedon@gmail.com": {
+        "password_hash": "scrypt:32768:8:1$hVUkJj836HHNNUmG$87fbce849cfa6c8acd86d1e1ad7ce5b3c0ecea7fa2269421217bfc1e872f62411aee13bd0677c3a8eb2e1ebfe7a18446a9634a44d4e601ffa97b724630ec931d"
+    },
+    "melvin": {
+        "password_hash": "scrypt:32768:8:1$1WxRY5VPksiG7CwQ$aec55a8545a8afb7362adfccb6ba079dfaa83d7535e1b0a6c4aedd306fb8b04b6666684880df97d79c314402ce0da266c9d42fd85ebd7d7f95413ae2b80c412b"
+    }
+}
