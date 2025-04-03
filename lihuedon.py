@@ -4,7 +4,6 @@ import time
 import requests
 from datetime import datetime
 import json
-import logging
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
@@ -32,13 +31,6 @@ lapp.secret_key = get_json_key_value('key')
 lapp.inHg_conversion_factor = 33.8639
 lapp.base_url =  get_json_key_value('base_url')
 lapp.baseline = None
-
-# Configure logging
-logging.basicConfig(
-    filename='/home/pi/gunicorn/gunicorn_access.log',  # Log file name
-    level=logging.INFO,  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-    format='%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-)
 
 login_manager = LoginManager()
 login_manager.init_app(lapp)
