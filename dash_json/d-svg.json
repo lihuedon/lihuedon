@@ -1,0 +1,40 @@
+{
+  "id": "3",
+  "name": "d-svg",
+  "image": "tom_hanks.jpg",
+  "title": "SVG Demo Widget",
+  "create_dt": "2025-03-08 15:30:39",
+  "city": "Bellingham",
+  "paragraphs": [
+    {
+      "paragraph": "Great movie!"
+    },
+    {
+      "paragraph": "Second paragraph"
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    },
+    {
+      "paragraph": ""
+    }
+  ]
+}
