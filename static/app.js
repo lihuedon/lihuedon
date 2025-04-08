@@ -16,6 +16,14 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
         $('#clock-button-target').load('/thumb?image='+image);
     });
 
+    // SVG selector
+    $('.svg-selector').on('change', function() {
+        var image = $(this).attr('id');
+        var value = $(this).val();
+        $('#svg-selector-target').load('/thumb-svg?image='+value);
+//        $('#svg-selector-target').load('/thumb-svg?image='+image+'&val='+value);
+    });
+
     // Set Zipcode button
     $('.set-zip-button').on('click', function() {
         let zip = $('#zip').val()

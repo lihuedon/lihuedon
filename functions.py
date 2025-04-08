@@ -277,6 +277,21 @@ def get_json_key_value(key=""):
     value = json_data[key]
     return value
 
+# Get svg images for svg widget
+def get_svg_image_names():
+    # Specify the directory
+    directory = 'static/svg'
+
+    # List all files
+    files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
+
+    # Print the list of files
+    print("Files in the directory:")
+    for file in files:
+        print(file)
+    return files
+
+
 # print(f"The value for '{key}' is: {value}")
 
 # message = delete_card()

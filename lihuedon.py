@@ -12,7 +12,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 # Application packages
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value
+from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value, get_svg_image_names
 from loan import Loan
 from geonames import get_zip_data
 from weather import BarometerBaseline
@@ -70,6 +70,8 @@ def load_user(user_id):
 
 # Get inverse sorted image list
 sort_order = get_sort_ordered_list()
+
+
 # Get the cards dictionary in sorted order
 the_cards = get_cards(sort_order)
 
@@ -185,7 +187,8 @@ def dash_view(image=None):
     name = request.args.get('name')
     template_name = name + ".html"
     image = dash_cards[name].get("image")
-    return render_template(template_name, dash_cards=dash_cards, image=image, name=name)
+    svg_images = get_svg_image_names() # used for svg demo widget
+    return render_template(template_name, dash_cards=dash_cards, image=image, name=name, svg_images=svg_images)
 
 
 @lapp.route('/weather/', methods=['GET'])
@@ -373,6 +376,15 @@ def thumb(image=None):
     if image_request:
         image = image_request
     return render_template('thumb.html', image=image)
+
+
+# Get thumbnail svg image
+@lapp.route('/thumb-svg/', methods=['GET'])
+def thumb_svg(image=None):
+    image_request = request.args.get('image')
+    if image_request:
+        image = image_request
+    return render_template('thumb_svg.html', image=image)
 
 
 # Add image
