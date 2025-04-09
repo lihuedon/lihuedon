@@ -30,7 +30,9 @@
                                 type="name" value="{{image}}">
                             <option selected>{{image}}</option>
                             {% for img in svg_images %}
-                            <option value="{{img}}">{{img}}</option>
+                                {% if img != image %}
+                                <option value="{{img}}">{{img}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
