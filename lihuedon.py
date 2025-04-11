@@ -1,9 +1,6 @@
 import os
 import io
-import time
 import requests
-from datetime import datetime
-import json
 from flask import Flask, render_template, request, Response, send_from_directory, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from werkzeug.utils import secure_filename
@@ -12,7 +9,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 # Application packages
-from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value, get_svg_image_names
+from functions import get_sort_ordered_list, get_cards, get_date_time, allowed_file, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value, get_svg_image_names
 from users import load_users, save_users
 from loan import Loan
 from geonames import get_zip_data
@@ -69,35 +66,6 @@ dash_cards = get_dash_cards(dash_sort_order)
 UPLOAD_FOLDER = 'static/images/'
 lapp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Define allowed file extensions
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-
-def get_date_time(time=None):
-    x = datetime.now()
-    dt_string = x.strftime("%A") + " " + x.strftime("%B") + " " + x.strftime("%d") + ", " + x.strftime("%Y")
-    if time:
-        dt_string = dt_string + " " + x.strftime("%X")
-    return dt_string
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def stream_log():
-    log_file_path = "/home/pi/gunicorn/gunicorn_access.log"
-    with open(log_file_path) as log_file:
-        # Move to the end of the file
-        log_file.seek(0, 2)
-        while True:
-            line = log_file.readline()
-            if line:
-                yield f"{line}"
-            time.sleep(.5)  # Small delay for stream pacing
-
-
 def set_baseline(pressure_inHg, reset):
 
     if not lapp.baseline:
@@ -140,11 +108,11 @@ def register():
 
 @lapp.route('/login', methods=['GET', 'POST'])
 def login():
+    new_image = get_new_image()
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         user_data = lapp_users.get(username)
-        new_image = get_new_image()
         if user_data and check_password_hash(user_data["password_hash"], password):  # Verify the password
             user = User(username, user_data["password_hash"])
             login_user(user)
@@ -242,11 +210,6 @@ def uploaded_file(filename):
 def error():
     lapp.logger.error('Error occurred in /error route.')  # Log an ERROR message
     return "This route throws an error!", 500
-
-
-@lapp.route('/stream')
-def stream():
-    return Response(stream_log(), content_type='text/event-stream')
 
 
 # Card view

@@ -6,12 +6,29 @@ the_cards = {}
 CREATE_CARD = "none"
 
 
+# Define allowed file extensions
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 # Get image names from file system
 def get_image_names():
     # The images drive the home content
     image_path = './static/images'
     image_names = os.listdir(image_path)
     return image_names
+
+
+def get_date_time(time=None):
+    x = datetime.now()
+    dt_string = x.strftime("%A") + " " + x.strftime("%B") + " " + x.strftime("%d") + ", " + x.strftime("%Y")
+    if time:
+        dt_string = dt_string + " " + x.strftime("%X")
+    return dt_string
 
 
 # Get next id number
