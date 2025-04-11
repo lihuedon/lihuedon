@@ -13,6 +13,7 @@ from matplotlib.figure import Figure
 
 # Application packages
 from functions import get_sort_ordered_list, get_cards, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value, get_svg_image_names
+from users import load_users, save_users
 from loan import Loan
 from geonames import get_zip_data
 from weather import BarometerBaseline
@@ -35,24 +36,8 @@ lapp.baseline = None
 login_manager = LoginManager()
 login_manager.init_app(lapp)
 
-# JSON file to store user data
-USER_DATA_FILE = "users.json"
-
-# Helper function to load users from JSON
-def load_users():
-    try:
-        with open(USER_DATA_FILE, "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return {}  # Return an empty dictionary if the file doesn't exist
-
-# Helper function to save users to JSON
-def save_users(users):
-    with open(USER_DATA_FILE, "w") as file:
-        json.dump(users, file, indent=4)
-
 # Load users from the file when the application starts
-users = load_users()
+lapp_users = load_users()
 
 # User model
 class User(UserMixin):
@@ -63,8 +48,8 @@ class User(UserMixin):
 # User loader
 @login_manager.user_loader
 def load_user(user_id):
-    if user_id in users:
-        user_data = users[user_id]
+    if user_id in lapp_users:
+        user_data = lapp_users[user_id]
         return User(user_id, user_data["password_hash"])
     return None
 
@@ -144,11 +129,11 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        if username in users:
+        if username in lapp_users:
             return "Username already exists!"
         password_hash = generate_password_hash(password)  # Hash the password
-        users[username] = {"password_hash": password_hash}  # Store user in JSON-compatible format
-        save_users(users)  # Save the updated users to the file
+        lapp_users[username] = {"password_hash": password_hash}  # Store user in JSON-compatible format
+        save_users(lapp_users)  # Save the updated users to the file
         return redirect(url_for('login'))
     return render_template('register.html')
 
@@ -158,11 +143,11 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        user_data = users.get(username)
+        user_data = lapp_users.get(username)
+        new_image = get_new_image()
         if user_data and check_password_hash(user_data["password_hash"], password):  # Verify the password
             user = User(username, user_data["password_hash"])
             login_user(user)
-            new_image = get_new_image()
             return render_template('card_edit.html', image='Don_Simpson.jpg', the_cards=the_cards, image_list=sort_order, new_image=new_image, dash_cards=dash_cards)
         # return render_template('login.html')
         return "Invalid username or password!"
@@ -398,6 +383,7 @@ def add_image(image=None):
         image = image_request
     new_image = get_new_image()
     global the_cards
+    global sort_order
     sort_order = get_sort_ordered_list()
     the_cards = get_cards(sort_order)
     return render_template('card_edit.html', image=image, the_cards=the_cards, image_list=sort_order, new_image=new_image)
