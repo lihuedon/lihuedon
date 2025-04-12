@@ -49,7 +49,6 @@ def get_sort_ordered_list():
     i = 1
     for image_name in image_names:
         if os.path.exists(file_path + image_name + ".json"):
-
             with open("app_json/" + image_name + ".json", mode="r", encoding="utf-8") as read_file:
                 card_data = json.load(read_file)
                 cards[image_name] = card_data
@@ -188,7 +187,6 @@ def update_card(image=None, id=None, name=None, title=None, paragraph_text=None,
                     dict_list.append(dict_copy)
                 i += 1
                 card['paragraphs'] = dict_list
-
             # place the cursor at the beginning of the file
             json_file.seek(0)
             json.dump(card, json_file)
@@ -210,7 +208,6 @@ def create_new_card(image=None):
     # Format the date and time
     formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
     print("Formatted date and time:", formatted_now)
-
     card['id'] = get_next_id_int()
     card['name'] = image
     card['title'] = "Title Goes Here"
@@ -227,10 +224,8 @@ def create_new_card(image=None):
     i += 1
     card['paragraphs'] = dict_list
     print(card)
-
     with open(json_file_path, 'w') as fp:
         json.dump(card, fp)
-
     global CREATE_CARD
     CREATE_CARD = "none"
     return card
@@ -257,7 +252,6 @@ def delete_card_json(image=None, name=None):
         print(e)
     finally:
         print("delete_card_json: " + file_path)
-
     return 0
 
 
@@ -276,7 +270,6 @@ def delete_card_image(image=None):
         print(e)
     finally:
         print("delete_card_image: " + file_path)
-
     return 0
 
 
@@ -298,10 +291,8 @@ def get_json_key_value(key=""):
 def get_svg_image_names():
     # Specify the directory
     directory = 'static/svg'
-
     # List all files
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
-
     # Print the list of files
     print("Files in the directory:")
     for file in files:
