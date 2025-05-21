@@ -18,7 +18,7 @@ from weather import BarometerBaseline
 session = requests.Session()
 session.cookies['zip'] = "98225"
 session.cookies['baseline'] = 28.45
-print(session.cookies.get_dict())
+# print(session.cookies.get_dict())
 
 fig = Figure()
 ln = Loan()
@@ -157,16 +157,16 @@ def weather(zip="98225"):
     city = "Bellingham"  #default
     state = "Washington"  #default
     city_info = get_zip_data(zip)
-    print(city_info)
+    # print(city_info)
     if city_info:
         city = city_info['postalCodes'][0]['placeName']
         state = city_info['postalCodes'][0]['adminName1']
-    print(city)
+    # print(city)
     final_url = lapp.base_url + zip + ",us"
     json_data = requests.get(final_url).json()
     the_weather = json_data['weather']
     the_main = json_data['main']
-    print(the_main)
+    # print(the_main)
     zip_request = the_main['temp']
     feels_like = the_main['feels_like']
     temp_min = the_main['temp_min']

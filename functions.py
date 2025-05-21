@@ -294,9 +294,9 @@ def get_svg_image_names():
     # List all files
     files = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f))]
     # Print the list of files
-    print("Files in the directory:")
-    for file in files:
-        print(file)
+    # print("Files in the directory:")
+    # for file in files:
+    #     print(file)
     return files
 
 
