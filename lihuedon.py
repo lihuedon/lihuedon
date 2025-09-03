@@ -9,7 +9,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 # Application packages
-from functions import get_sort_ordered_list, get_cards, get_date_time, allowed_file, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value, get_svg_image_names
+from functions import get_sort_ordered_list, get_cards, get_date_time, allowed_file, get_new_image, create_new_card, update_card, delete_card, get_dash_cards, get_json_key_value, get_svg_image_names, get_whiteboard_image
 from users import load_users, save_users
 from loan import Loan
 from geonames import get_zip_data
@@ -58,7 +58,7 @@ sort_order = get_sort_ordered_list()
 the_cards = get_cards(sort_order)
 
 # Get dashboard card sorted names list
-dash_sort_order = ['d-weather', 'd-clock', 'd-svg', 'd-clock-london', 'd-widget']
+dash_sort_order = ['d-weather', 'd-clock', 'd-svg', 'd-clock-london', 'd-widget', 'd-whiteboard']
 # Get the cards dictionary in sorted order
 dash_cards = get_dash_cards(dash_sort_order)
 
@@ -315,6 +315,13 @@ def card_edit(image=None):
     image = request.args.get('image')
     new_image = get_new_image()
     return render_template('card_edit.html', the_cards=the_cards, image=image, image_list=sort_order, new_image=new_image, dash_cards=dash_cards)
+
+
+# Get whiteboard image
+@lapp.route('/whiteboard/', methods=['GET'])
+def whiteboard():
+    image = get_whiteboard_image()
+    return render_template('whiteboard.html', image=image)
 
 
 # Get thumbnail image

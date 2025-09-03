@@ -10,6 +10,9 @@ $(document).ready(function(){ // DOCUMENT READY FUNCTION
     // Widget data
     $('#widget-target').load('/thumb?image=tom_hanks.jpg');
 
+    // whiteboard data
+    $('#whiteboard-target').load('/whiteboard/');
+
     // Clock button
     $('.clock-button').on('click', function() {
         var image = $(this).attr('id');

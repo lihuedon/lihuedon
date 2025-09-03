@@ -299,6 +299,31 @@ def get_svg_image_names():
     #     print(file)
     return files
 
+# Get most current whiteboard image from file system
+def get_whiteboard_image():
+    # The image
+    image_path = './static/freezer'
+    image_names = os.listdir(image_path)
+    whiteboard_images = sorted(image_names, reverse=True)
+    current_image = whiteboard_images[0]
+    for i in whiteboard_images:
+        if i == current_image:
+            print(f'CURRENT WHITEBOARD: {current_image}')
+        else:
+            file_path = "./static/freezer/" + i
+            try:
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                    print("File was removed.")
+                else:
+                    print("File does not exist but it's definitely gone.")
+            except Exception as e:
+                print(e)
+            finally:
+                print("get_whiteboard_image: " + file_path)
+    return current_image
+
+# print(get_whiteboard_image())
 
 # print(f"The value for '{key}' is: {value}")
 
